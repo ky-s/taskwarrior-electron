@@ -19,15 +19,6 @@ export default {
     const { getTasks } = require('@/../modules/taskwarrior')
 
     return { tasks: getTasks() }
-  },
-  methods: {
-    getRowClass (task) {
-      if (task.status === 'completed') {
-        return 'has-background-grey-light'
-      }
-
-      return ''
-    }
   }
 }
 </script>
