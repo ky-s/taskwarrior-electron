@@ -4,6 +4,8 @@ const { spawnSync } = require('child_process')
  * Task model
  *   from taskwarrior
  */
+// FIXME: これを定義すると No exports provided になってしまう
+// でもクラスにしたほうがいいので使いたい
 // class Task {
 //   constructor (options) {
 //     this.id = options.id
@@ -20,7 +22,7 @@ const { spawnSync } = require('child_process')
 //     this.urgency = options.urgency || ''
 //   }
 // }
-//
+
 // module.exports.Task = Task
 
 /**
