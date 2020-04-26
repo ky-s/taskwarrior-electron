@@ -2,37 +2,19 @@
   <div class="container">
     <h1 class="title">Tasks</h1>
 
-    <table class="table is-fullwidth is-hoverable">
-      <thead>
-        <tr>
-          <th><abbr title="due">Due</abbr></th>
-          <th><abbr title="project">Project</abbr></th>
-          <th><abbr title="priority">Priority</abbr></th>
-          <th><abbr title="tags">Tags</abbr></th>
-          <th><abbr title="description">Description</abbr></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(task, i) in tasks" :key="i" :task="task" :class="getRowClass(task)">
-          <td>{{ task.due }}</td>
-          <td>{{ task.project }}</td>
-          <td>{{ task.priority }}</td>
-          <td>{{ task.tags }}</td>
-          <td>{{ task.description }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <task-table :tasks="tasks"/>
+
   </div>
 </template>
 
 <script>
-// import TaskCard from '@/components/TaskCard.vue'
+import TaskTable from '@/components/TaskTable.vue'
 
 export default {
   name: 'main-page',
-  // components: {
-  //   TaskCard
-  // },
+  components: {
+    TaskTable
+  },
   data: () => {
     const { getTasks } = require('@/../modules/taskwarrior')
 
