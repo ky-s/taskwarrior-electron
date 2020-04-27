@@ -69,6 +69,18 @@ exports.getTasks = () => {
 }
 
 /**
+ * findTask
+ */
+exports.findTask = uuid => {
+  const tasks = exports.getTasks().filter(task => task.uuid === uuid)
+
+  if (tasks.length === 0) {
+    throw new Error(`uuid=${uuid} task not found`)
+  }
+  return tasks[0]
+}
+
+/**
  * get Latest Task
  *   from `task [filter] export` command
  */
@@ -158,6 +170,9 @@ exports.deleteTask = uuid => {
   return true
 }
 
+/**
+ * getProjects
+ */
 exports.getProjects = () => {
   return exports.getTasks().map(task => (task.project))
     .filter((project, index, self) => self.indexOf(project) === index) // = uniq
