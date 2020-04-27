@@ -1,56 +1,56 @@
 <template>
-  <div v-model="task">
+  <div>
     <form>
-    <div class="field has-addons">
-      <div class="control">
-        <label class="label">Project</label>
-        <input class="input" type="text" placeholder="project" list="project-list" :value="task.project">
-        <datalist id="project-list">
-          <option v-for="project in projects" :value="project "/>
-        </datalist>
-      </div>
+      <div class="field has-addons">
+        <div class="control">
+          <label class="label">Project</label>
+          <input class="input" type="text" placeholder="project" list="project-list" v-model="task.project">
+          <datalist id="project-list">
+            <option v-for="project in projects" :value="project "/>
+          </datalist>
+        </div>
 
-      <div class="control">
-        <label class="label">Priority</label>
-        <div class="select">
-          <select :value="task.priority">
-            <option value="null"></option>
-            <option value="H">High</option>
-            <option value="M">Middle</option>
-            <option value="L">Low</option>
-          </select>
+        <div class="control">
+          <label class="label">Priority</label>
+          <div class="select">
+            <select v-model="task.priority">
+              <option value="null"></option>
+              <option value="H">High</option>
+              <option value="M">Middle</option>
+              <option value="L">Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="control">
+          <label class="label">Tags</label>
+          <input class="input" type="text" placeholder="tags" v-model="task.tags">
         </div>
       </div>
 
-      <div class="control">
-        <label class="label">Tags</label>
-        <input class="input" type="text" placeholder="tags" :value="task.tags">
-      </div>
-    </div>
+      <div class="field has-addons">
+        <div class="control">
+          <label class="label">Due</label>
+          <input class="input" type="date" placeholder="Due" v-model="task.due">
+        </div>
 
-    <div class="field has-addons">
-      <div class="control">
-        <label class="label">Due</label>
-        <input class="input" type="date" placeholder="Due" :value="task.due">
-      </div>
+        <div class="control is-expanded">
+          <label class="label">Description</label>
+          <input class="input" type="text" placeholder="description" v-model="task.description">
+        </div>
 
-      <div class="control is-expanded">
-        <label class="label">Description</label>
-        <input class="input" type="text" placeholder="description" :value="task.description">
+        <div class="control">
+          <label class="label">Create</label>
+          <button class="button is-success" v-on:click="save()">Create</button>
+        </div>
       </div>
-
-      <div class="control">
-        <label class="label">Create</label>
-        <button class="button">Create</button>
-      </div>
-    </div>
     </form>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'tasks-form',
+  name: 'task-form',
   data () {
     const moment = require('moment')
     const defaultDue = moment().format('YYYY-MM-DD')
@@ -62,6 +62,27 @@ export default {
         'Electron',
         'Rails'
       ]
+    }
+  },
+  methods: {
+    save () {
+      console.log(this.task.due)
+      if (this.task.uuid !== undefined) {
+        const { modifyTask } = require('@/../modules/taskwarrior')
+        // TODO
+        // modifyTask(this.task.uuid, this.task)
+        console.log(modifyTask)
+        console.log('update')
+        console.log(this.task.description)
+      } else {
+        const { addTask } = require('@/../modules/taskwarrior')
+        // TODO
+        // addTask(this.task)
+        console.log(addTask)
+        console.log('create')
+        console.log(this.task.description)
+      }
+      this.task.description = ''
     }
   }
 }

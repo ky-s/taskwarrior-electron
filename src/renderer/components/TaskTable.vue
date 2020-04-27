@@ -8,20 +8,28 @@
     <table class="table is-fullwidth is-hoverable">
       <thead>
         <tr>
+          <th><abbr title="done">Done</abbr></th>
           <th><abbr title="due">Due</abbr></th>
           <th><abbr title="project">Project</abbr></th>
           <th><abbr title="priority">Priority</abbr></th>
           <th><abbr title="tags">Tags</abbr></th>
           <th><abbr title="description">Description</abbr></th>
+          <th></th>
         </tr>
       </thead>
       <tbody v-model="showDone">
         <tr v-for="(task, i) in tasks" :key="i" :class="getRowClass(task)">
+          <td>
+            <input type="checkbox" :checked="task.status == 'completed'" :disabled="task.status == 'completed'" v-on:change="doneTask(task)">
+          </td>
           <td>{{ dateFormat(task.due) }}</td>
           <td>{{ task.project }}</td>
           <td>{{ task.priority }}</td>
           <td>{{ (task.tags || []).join(', ') }}</td>
           <td>{{ task.description }}</td>
+          <td>
+            <button class="button is-danger" v-on:click="deleteTask(task)">Delete</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -49,6 +57,22 @@ export default {
     dateFormat (due) {
       const moment = require('moment')
       return moment(due).format('YYYY-MM-DD')
+    },
+    doneTask (task) {
+      const { doneTask } = require('@/../modules/taskwarrior')
+      // TODO
+      // doneTask(task.uuid)
+      console.log(doneTask)
+      console.log('done')
+      console.log(task)
+    },
+    deleteTask (task) {
+      const { deleteTask } = require('@/../modules/taskwarrior')
+      // TODO
+      // deleteTask(task.uuid)
+      console.log(deleteTask)
+      console.log('delete')
+      console.log(task)
     }
   }
 }
