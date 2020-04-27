@@ -45,7 +45,7 @@ const compareTask = (a, b) => {
  * get All Tasks
  *   from `task [filter] export` command
  */
-module.exports.getTasks = () => {
+exports.getTasks = () => {
   const cmd = spawnSync(
     'task',
     [
@@ -72,7 +72,7 @@ module.exports.getTasks = () => {
  * get Latest Task
  *   from `task [filter] export` command
  */
-module.exports.getLatestTask = () => {
+exports.getLatestTask = () => {
   const cmd = spawnSync('task', ['+LATEST', 'export'])
 
   if (cmd.stderr.length > 0) {
@@ -91,7 +91,7 @@ module.exports.getLatestTask = () => {
  * add Task
  *   by `task add <mods>` command
  */
-module.exports.addTask = (options) => {
+exports.addTask = (options) => {
   options = options || {}
 
   const cmd = spawnSync(
@@ -115,7 +115,7 @@ module.exports.addTask = (options) => {
  * modify Task
  *   by `task <filter> modify <mods>` command
  */
-module.exports.modifyTask = (uuid, options) => {
+exports.modifyTask = (uuid, options) => {
   const cmd = spawnSync(
     'task',
     [
@@ -138,7 +138,7 @@ module.exports.modifyTask = (uuid, options) => {
  * done Task
  *   by `task <filter> done <mods>` command
  */
-module.exports.doneTask = uuid => {
+exports.doneTask = uuid => {
   const cmd = spawnSync('task', [uuid, 'done'])
   console.log(cmd)
 
@@ -149,11 +149,16 @@ module.exports.doneTask = uuid => {
  * delete Task
  *   by `task <filter> delete <mods>` command
  */
-module.exports.deleteTask = uuid => {
+exports.deleteTask = uuid => {
   // 先に status を pending にしておかないと削除できないらしい
   const precmd = spawnSync('task', [uuid, 'modify', 'status:pending'])
   console.log(precmd)
   execSync(`yes | task "${uuid}" delete`)
 
   return true
+}
+
+exports.getProjects = () => {
+  return exports.getTasks().map(task => (task.project))
+    .filter((project, index, self) => self.indexOf(project) === index) // = uniq
 }

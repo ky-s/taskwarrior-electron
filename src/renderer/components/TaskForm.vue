@@ -52,16 +52,14 @@
 export default {
   name: 'task-form',
   data () {
+    const { getProjects } = require('@/../modules/taskwarrior')
     const moment = require('moment')
     const defaultDue = moment().format('YYYY-MM-DD')
     return {
       task: {
         due: defaultDue
       },
-      projects: [
-        'Electron',
-        'Rails'
-      ]
+      projects: getProjects()
     }
   },
   methods: {
