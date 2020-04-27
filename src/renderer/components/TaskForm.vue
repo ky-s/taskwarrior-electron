@@ -40,8 +40,8 @@
         </div>
 
         <div class="control">
-          <label class="label">Create</label>
-          <button class="button is-success" v-on:click="save()">Create</button>
+          <label class="label">Save</label>
+          <button class="button is-success" v-on:click="save()">Save</button>
         </div>
       </div>
     </form>
@@ -76,11 +76,8 @@ export default {
         console.log(this.task.description)
       } else {
         const { addTask } = require('@/../modules/taskwarrior')
-        // TODO
         addTask(this.task)
-        console.log(addTask)
         console.log('create')
-        console.log(this.task.description)
       }
       this.task.description = ''
       this.$emit('reloadTask')
