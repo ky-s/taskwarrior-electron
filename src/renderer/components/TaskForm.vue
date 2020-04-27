@@ -51,31 +51,35 @@
 <script>
 export default {
   name: 'task-form',
+  props: {
+    seedTask: Object
+  },
+
   data () {
     const { getProjects } = require('@/../modules/taskwarrior')
     const moment = require('moment')
-    const defaultDue = moment().format('YYYY-MM-DD')
+
+    let task = this.seedTask ? this.seedTask : { due: new Date() }
+    task.due = moment(task.due).format('YYYY-MM-DD')
+
     return {
-      task: {
-        due: defaultDue
-      },
+      task: task,
       projects: getProjects()
     }
   },
+
   methods: {
     save () {
-      console.log(this.task.due)
       if (this.task.uuid !== undefined) {
         const { modifyTask } = require('@/../modules/taskwarrior')
-        // TODO
-        // modifyTask(this.task.uuid, this.task)
-        console.log(modifyTask)
         console.log('update')
-        console.log(this.task.description)
+        modifyTask(this.task.uuid, this.task)
+
+        this.$router.push('/')
       } else {
         const { addTask } = require('@/../modules/taskwarrior')
-        addTask(this.task)
         console.log('create')
+        addTask(this.task)
       }
       this.task.description = ''
       this.$emit('reloadTask')

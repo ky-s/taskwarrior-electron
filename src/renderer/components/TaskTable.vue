@@ -30,6 +30,9 @@
           <td>{{ (task.tags || []).join(', ') }}</td>
           <td>{{ task.description }}</td>
           <td>
+            <router-link :to="getEditLink(task)">
+              <button class="button is-link">Edit</button>
+            </router-link>
             <button class="button is-danger" v-on:click="deleteTask(task)">Delete</button>
           </td>
         </tr>
@@ -64,6 +67,9 @@ export default {
       }
 
       return ''
+    },
+    getEditLink (task) {
+      return `/edit/${task.uuid}`
     },
     dateFormat (due) {
       const moment = require('moment')
