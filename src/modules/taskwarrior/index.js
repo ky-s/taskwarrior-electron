@@ -23,7 +23,7 @@ const { spawnSync, execSync } = require('child_process')
 //   }
 // }
 
-// module.exports.Task = Task
+// exports.Task = Task
 
 const compareTask = (a, b) => {
   if (a.status === 'completed' && b.status !== 'completed') {
