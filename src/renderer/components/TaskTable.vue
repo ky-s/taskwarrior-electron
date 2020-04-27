@@ -17,7 +17,7 @@
       </thead>
       <tbody v-model="showDone">
         <tr v-for="(task, i) in tasks" :key="i" :class="getRowClass(task)">
-          <td>{{ task.due }}</td>
+          <td>{{ dateFormat(task.due) }}</td>
           <td>{{ task.project }}</td>
           <td>{{ task.priority }}</td>
           <td>{{ (task.tags || []).join(', ') }}</td>
@@ -45,6 +45,10 @@ export default {
       }
 
       return ''
+    },
+    dateFormat (due) {
+      const moment = require('moment')
+      return moment(due).format('YYYY-MM-DD')
     }
   }
 }
