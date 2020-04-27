@@ -106,9 +106,7 @@ module.exports.addTask = (options) => {
     ]
   )
 
-  if (cmd.stderr.length > 0) {
-    throw cmd.stderr.toString()
-  }
+  console.log(cmd)
 
   return true
 }
@@ -131,9 +129,7 @@ module.exports.modifyTask = (uuid, options) => {
     ]
   )
 
-  if (cmd.stderr.length > 0) {
-    throw cmd.stderr.toString()
-  }
+  console.log(cmd)
 
   return true
 }
