@@ -77,12 +77,13 @@ export default {
       } else {
         const { addTask } = require('@/../modules/taskwarrior')
         // TODO
-        // addTask(this.task)
+        addTask(this.task)
         console.log(addTask)
         console.log('create')
         console.log(this.task.description)
       }
       this.task.description = ''
+      this.$emit('reloadTask')
     }
   }
 }

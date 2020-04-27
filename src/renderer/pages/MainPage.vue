@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <h1 class="title">Tasks</h1>
-    <task-form/>
+    <task-form @reloadTask="reloadTask" />
 
-    <task-table :tasks="tasks"/>
+    <task-table :tasks="tasks" @reloadTask="reloadTask" />
 
   </div>
 </template>
@@ -22,6 +22,13 @@ export default {
     const { getTasks } = require('@/../modules/taskwarrior')
 
     return { tasks: getTasks() }
+  },
+  methods: {
+    reloadTask () {
+      console.log('reload')
+      const { getTasks } = require('@/../modules/taskwarrior')
+      this.tasks = getTasks()
+    }
   }
 }
 </script>

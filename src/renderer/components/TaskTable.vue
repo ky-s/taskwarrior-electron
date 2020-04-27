@@ -60,19 +60,17 @@ export default {
     },
     doneTask (task) {
       const { doneTask } = require('@/../modules/taskwarrior')
-      // TODO
-      // doneTask(task.uuid)
-      console.log(doneTask)
-      console.log('done')
-      console.log(task)
+      if (doneTask(task.uuid)) {
+        this.$emit('reloadTask')
+      }
     },
     deleteTask (task) {
-      const { deleteTask } = require('@/../modules/taskwarrior')
-      // TODO
-      // deleteTask(task.uuid)
-      console.log(deleteTask)
-      console.log('delete')
-      console.log(task)
+      if (window.confirm('Are you sure?')) {
+        const { deleteTask } = require('@/../modules/taskwarrior')
+        if (deleteTask(task.uuid)) {
+          this.$emit('reloadTask')
+        }
+      }
     }
   }
 }

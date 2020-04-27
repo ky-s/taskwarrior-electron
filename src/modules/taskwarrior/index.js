@@ -1,4 +1,4 @@
-const { spawnSync } = require('child_process')
+const { spawnSync, execSync } = require('child_process')
 
 /**
  * Task model
@@ -25,6 +25,22 @@ const { spawnSync } = require('child_process')
 
 // module.exports.Task = Task
 
+const compareTask = (a, b) => {
+  if (a.status === 'completed' && b.status !== 'completed') {
+    return 1
+  } else if (a.status !== 'completed' && b.status === 'completed') {
+    return -1
+  }
+
+  if (a.due < b.due) {
+    return -1
+  } else if (a.due === b.due) {
+    return 0
+  } else {
+    return 1
+  }
+}
+
 /**
  * get All Tasks
  *   from `task [filter] export` command
@@ -46,7 +62,7 @@ module.exports.getTasks = () => {
     throw cmd.stderr.toString()
   }
 
-  const tasksObj = JSON.parse(cmd.stdout.toString())
+  const tasksObj = JSON.parse(cmd.stdout.toString()).sort(compareTask)
   return tasksObj
 
   // return tasksObj.map(taskObj => { return new Task(taskObj) })
@@ -128,10 +144,7 @@ module.exports.modifyTask = (uuid, options) => {
  */
 module.exports.doneTask = uuid => {
   const cmd = spawnSync('task', [uuid, 'done'])
-
-  if (cmd.stderr.length > 0) {
-    throw cmd.stderr.toString()
-  }
+  console.log(cmd)
 
   return true
 }
@@ -141,11 +154,10 @@ module.exports.doneTask = uuid => {
  *   by `task <filter> delete <mods>` command
  */
 module.exports.deleteTask = uuid => {
-  const cmd = spawnSync('task', [uuid, 'delete'])
-
-  if (cmd.stderr.length > 0) {
-    throw cmd.stderr.toString()
-  }
+  // 先に status を pending にしておかないと削除できないらしい
+  const precmd = spawnSync('task', [uuid, 'modify', 'status:pending'])
+  console.log(precmd)
+  execSync(`yes | task "${uuid}" delete`)
 
   return true
 }
