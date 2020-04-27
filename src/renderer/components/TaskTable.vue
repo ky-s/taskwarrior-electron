@@ -5,6 +5,8 @@
       show done
     </label>
 
+    <button class="button is-warning" v-on:click="redue()">Redue</button>
+
     <table class="table is-fullwidth is-hoverable">
       <thead>
         <tr>
@@ -53,8 +55,12 @@ export default {
       }
 
       const moment = require('moment')
-      if (moment(task.due) < moment()) {
+      const due = moment(task.due)
+
+      if (due.isBefore(moment())) {
         return 'has-text-weight-bold has-background-warning'
+      } else if (due === moment()) {
+        return 'has-text-weight-bold'
       }
 
       return ''
@@ -62,6 +68,19 @@ export default {
     dateFormat (due) {
       const moment = require('moment')
       return moment(due).format('YYYY-MM-DD')
+    },
+    redue () {
+      const moment = require('moment')
+      const { modifyTask } = require('@/../modules/taskwarrior')
+
+      this.tasks.filter(task => { return task.status !== 'completed' })
+        .forEach(task => {
+          if (moment(task.due) < moment()) {
+            task.due = moment().format('YYYY-MM-DD')
+            modifyTask(task.uuid, task)
+          }
+        })
+      this.$emit('reloadTask')
     },
     doneTask (task) {
       const { doneTask } = require('@/../modules/taskwarrior')
