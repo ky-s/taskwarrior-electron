@@ -52,6 +52,11 @@ export default {
         return 'is-hidden'
       }
 
+      const moment = require('moment')
+      if (moment(task.due) < moment()) {
+        return 'has-text-weight-bold has-background-warning'
+      }
+
       return ''
     },
     dateFormat (due) {
