@@ -3,6 +3,11 @@
     <form>
       <div class="field has-addons">
         <div class="control">
+          <label class="label">Due</label>
+          <input class="input" type="date" placeholder="Due" v-model="task.due">
+        </div>
+
+        <div class="control">
           <label class="label">Project</label>
           <input class="input" type="text" placeholder="project" list="project-list" v-model="task.project">
           <datalist id="project-list">
@@ -27,13 +32,7 @@
           <input class="input" type="text" placeholder="tags" v-model="task.tags">
         </div>
       </div>
-
       <div class="field has-addons">
-        <div class="control">
-          <label class="label">Due</label>
-          <input class="input" type="date" placeholder="Due" v-model="task.due">
-        </div>
-
         <div class="control is-expanded">
           <label class="label">Description</label>
           <input class="input" type="text" placeholder="description" v-model="task.description">
@@ -41,7 +40,9 @@
 
         <div class="control">
           <label class="label">Save</label>
-          <button class="button is-success" v-on:click="save()">Save</button>
+          <button class="button is-success" v-on:click="save()">
+            <font-awesome-icon icon="save" />
+          </button>
         </div>
       </div>
     </form>

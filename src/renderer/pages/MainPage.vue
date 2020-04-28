@@ -2,6 +2,7 @@
   <div class="container">
     <h1 class="title">Tasks</h1>
     <task-form @reloadTask="reloadTask" />
+    <hr>
 
     <task-table :tasks="tasks" @reloadTask="reloadTask" />
 

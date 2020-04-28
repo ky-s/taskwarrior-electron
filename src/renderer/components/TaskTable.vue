@@ -5,7 +5,12 @@
       show done
     </label>
 
-    <button class="button is-warning" v-on:click="redue()">Redue</button>
+    <button class="button is-dark" v-on:click="redue()">
+      <span class="icon">
+        <font-awesome-icon icon="calendar-check" />
+      </span>
+      <p>Redue</p>
+    </button>
 
     <table class="table is-fullwidth is-hoverable">
       <thead>
@@ -31,9 +36,17 @@
           <td>{{ task.description }}</td>
           <td>
             <router-link :to="getEditLink(task)">
-              <button class="button is-link">Edit</button>
+              <button class="button is-primary">
+                <span class="icon">
+                  <font-awesome-icon icon="edit" />
+                </span>
+              </button>
             </router-link>
-            <button class="button is-danger" v-on:click="deleteTask(task)">Delete</button>
+            <button class="button is-danger" v-on:click="deleteTask(task)">
+              <span class="icon">
+                <font-awesome-icon icon="trash" />
+              </span>
+            </button>
           </td>
         </tr>
       </tbody>

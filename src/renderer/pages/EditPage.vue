@@ -3,7 +3,7 @@
     <h1 class="title">Edit Task</h1>
     <task-form @reloadTask="nothing" :seedTask="task" />
     <router-link to="/">
-      <button class="button is-link">Back</button>
+      Back
     </router-link>
   </div>
 </template>
