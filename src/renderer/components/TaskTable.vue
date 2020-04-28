@@ -15,13 +15,13 @@
     <table class="table is-fullwidth is-hoverable">
       <thead>
         <tr>
-          <th><abbr title="done">Done</abbr></th>
-          <th><abbr title="due">Due</abbr></th>
-          <th><abbr title="project">Project</abbr></th>
-          <th><abbr title="priority">Priority</abbr></th>
-          <th><abbr title="tags">Tags</abbr></th>
+          <th style="width: 5%"><abbr title="done">Done</abbr></th>
+          <th style="width: 10%"><abbr title="due">Due</abbr></th>
+          <th style="width: 10%"><abbr title="project">Project</abbr></th>
+          <th style="width: 5%"><abbr title="priority">Priority</abbr></th>
+          <th style="width: 10%"><abbr title="tags">Tags</abbr></th>
           <th><abbr title="description">Description</abbr></th>
-          <th></th>
+          <th style="width: 10%">Edit/Delete</th>
         </tr>
       </thead>
       <tbody v-model="showDone">
@@ -64,19 +64,23 @@ export default {
   methods: {
     getRowClass (task) {
       if (task.status === 'completed') {
-        if (this.showDone) {
-          return 'has-background-grey-light'
-        }
-        return 'is-hidden'
+        return this.showDone ? 'has-background-grey-light' : 'is-hidden'
       }
 
       const moment = require('moment')
       const due = moment(task.due)
+      const today = moment()
 
       if (due.isBefore(moment())) {
-        return 'has-text-weight-bold has-background-warning'
-      } else if (due === moment()) {
-        return 'has-text-weight-bold'
+        if (due.year === today.year &&
+            due.month === today.month &&
+            due.date() === today.date()) {
+          // due = today
+          return 'has-text-weight-bold'
+        } else {
+          // due < today (overdue)
+          return 'has-text-weight-bold has-background-warning'
+        }
       }
 
       return ''

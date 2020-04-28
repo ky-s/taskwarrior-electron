@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <div class="control">
+        <div class="control is-expanded">
           <label class="label">Tags</label>
           <input class="input" type="text" placeholder="tags" v-model="task.tags">
         </div>
