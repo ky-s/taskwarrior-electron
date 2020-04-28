@@ -5,6 +5,9 @@
 #### Build Setup
 
 ``` bash
+# install taskwarrior
+https://taskwarrior.org/
+
 # install Vue CLI3
 sudo yarn global add @vue/cli
 
