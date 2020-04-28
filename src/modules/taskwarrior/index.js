@@ -68,6 +68,16 @@ exports.getTasks = () => {
   // return tasksObj.map(taskObj => { return new Task(taskObj) })
 }
 
+exports.getUndoneTasks = () => {
+  return exports.getTasks()
+    .filter(task => { return task.status !== 'completed' })
+}
+
+exports.getDoneTasks = () => {
+  return exports.getTasks()
+    .filter(task => { return task.status === 'completed' })
+}
+
 /**
  * findTask
  */

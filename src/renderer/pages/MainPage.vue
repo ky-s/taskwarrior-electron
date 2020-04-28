@@ -5,11 +5,6 @@
     <task-form @reloadTask="reloadTask" />
     <hr>
 
-    <label class="checkbox">
-      <input type="checkbox" v-model="showDone">
-      show done
-    </label>
-
     <button class="button is-dark" v-on:click="redue()">
       <span class="icon">
         <font-awesome-icon icon="calendar-check" />
@@ -17,8 +12,14 @@
       <p>Redue</p>
     </button>
 
-    <task-table :tasks="tasks" @reloadTask="reloadTask" />
-    <task-table :tasks="doneTasks" @reloadTask="reloadTask" :class="showDone ? '' : 'is-hidden'" />
+    <task-table :tasks="undoneTasks" @reloadTask="reloadTask" />
+
+    <label class="checkbox">
+      <input type="checkbox" v-model="showDone">
+      show done
+    </label>
+
+   <task-table :tasks="doneTasks" @reloadTask="reloadTask" :class="showDone ? '' : 'is-hidden'" />
 
   </div>
 </template>
@@ -27,6 +28,8 @@
 import TaskForm from '@/components/TaskForm.vue'
 import TaskTable from '@/components/TaskTable.vue'
 
+const { getUndoneTasks, getDoneTasks } = require('@/../modules/taskwarrior')
+
 export default {
   name: 'main-page',
   components: {
@@ -34,28 +37,23 @@ export default {
     TaskForm
   },
   data: () => {
-    const { getTasks } = require('@/../modules/taskwarrior')
-    const tasks = getTasks()
-    const undoneTasks = tasks.filter(task => { return task.status !== 'completed' })
-    const doneTasks = tasks.filter(task => { return task.status === 'completed' })
-
     return {
-      tasks: undoneTasks,
-      doneTasks: doneTasks,
+      undoneTasks: getUndoneTasks(),
+      doneTasks: getDoneTasks(),
       showDone: false
     }
   },
   methods: {
     reloadTask () {
       console.log('reload')
-      const { getTasks } = require('@/../modules/taskwarrior')
-      this.tasks = getTasks()
+      this.undoneTasks = getUndoneTasks()
+      this.doneTasks = getDoneTasks()
     },
     redue () {
       const moment = require('moment')
       const { modifyTask } = require('@/../modules/taskwarrior')
 
-      this.tasks.filter(task => { return task.status !== 'completed' })
+      this.undoneTasks
         .forEach(task => {
           if (moment(task.due) < moment()) {
             task.due = moment().format('YYYY-MM-DD')
