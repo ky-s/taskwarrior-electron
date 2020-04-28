@@ -168,6 +168,17 @@ exports.doneTask = uuid => {
 }
 
 /**
+ * undone Task
+ *   by `task <filter> modify <mods>` command
+ */
+exports.undoneTask = uuid => {
+  const cmd = spawnSync('task', [uuid, 'modify', 'status:pending'])
+  console.log(cmd)
+
+  return true
+}
+
+/**
  * delete Task
  *   by `task <filter> delete <mods>` command
  */
