@@ -1,65 +1,51 @@
 <template>
-  <div>
-    <label class="checkbox">
-      <input type="checkbox" v-model="showDone">
-      show done
-    </label>
-
-    <button class="button is-dark" v-on:click="redue()">
-      <span class="icon">
-        <font-awesome-icon icon="calendar-check" />
-      </span>
-      <p>Redue</p>
-    </button>
-
-    <table class="table is-fullwidth is-hoverable">
-      <thead>
-        <tr>
-          <th style="width: 5%"><abbr title="done">Done</abbr></th>
-          <th style="width: 10%"><abbr title="due">Due</abbr></th>
-          <th style="width: 10%"><abbr title="project">Project</abbr></th>
-          <th style="width: 5%"><abbr title="priority">Priority</abbr></th>
-          <th style="width: 10%"><abbr title="tags">Tags</abbr></th>
-          <th><abbr title="description">Description</abbr></th>
-          <th style="width: 10%">Edit/Delete</th>
-        </tr>
-      </thead>
-      <tbody v-model="showDone">
-        <tr v-for="(task, i) in tasks" :key="i" :class="getRowClass(task)">
-          <td>
-            <input type="checkbox" :checked="task.status == 'completed'" :disabled="task.status == 'completed'" v-on:change="doneTask(task)">
-          </td>
-          <td>{{ dateFormat(task.due) }}</td>
-          <td>{{ task.project }}</td>
-          <td>{{ task.priority }}</td>
-          <td>{{ (task.tags || []).join(', ') }}</td>
-          <td>{{ task.description }}</td>
-          <td>
-            <router-link :to="getEditLink(task)">
-              <button class="button is-primary">
-                <span class="icon">
-                  <font-awesome-icon icon="edit" />
-                </span>
-              </button>
-            </router-link>
-            <button class="button is-danger" v-on:click="deleteTask(task)">
+  <table class="table is-fullwidth is-hoverable">
+    <thead>
+      <tr>
+        <th style="width: 5%"><abbr title="done">Done</abbr></th>
+        <th style="width: 10%"><abbr title="due">Due</abbr></th>
+        <th style="width: 10%"><abbr title="project">Project</abbr></th>
+        <th style="width: 5%"><abbr title="priority">Priority</abbr></th>
+        <th style="width: 10%"><abbr title="tags">Tags</abbr></th>
+        <th><abbr title="description">Description</abbr></th>
+        <th style="width: 10%">Edit/Delete</th>
+      </tr>
+    </thead>
+    <tbody v-model="showDone">
+      <tr v-for="(task, i) in tasks" :key="i" :class="getRowClass(task)">
+        <td>
+          <input type="checkbox" :checked="task.status == 'completed'" :disabled="task.status == 'completed'" v-on:change="doneTask(task)">
+        </td>
+        <td>{{ dateFormat(task.due) }}</td>
+        <td>{{ task.project }}</td>
+        <td>{{ task.priority }}</td>
+        <td>{{ (task.tags || []).join(', ') }}</td>
+        <td>{{ task.description }}</td>
+        <td>
+          <router-link :to="getEditLink(task)">
+            <button class="button is-primary">
               <span class="icon">
-                <font-awesome-icon icon="trash" />
+                <font-awesome-icon icon="edit" />
               </span>
             </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+          </router-link>
+          <button class="button is-danger" v-on:click="deleteTask(task)">
+            <span class="icon">
+              <font-awesome-icon icon="trash" />
+            </span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
 export default {
   name: 'tasks-table',
-  props: { tasks: Array },
-  data: () => {
-    return { showDone: false }
+  props: {
+    tasks: Array,
+    showDone: Boolean
   },
   methods: {
     getRowClass (task) {
@@ -91,19 +77,6 @@ export default {
     dateFormat (due) {
       const moment = require('moment')
       return moment(due).format('YYYY-MM-DD')
-    },
-    redue () {
-      const moment = require('moment')
-      const { modifyTask } = require('@/../modules/taskwarrior')
-
-      this.tasks.filter(task => { return task.status !== 'completed' })
-        .forEach(task => {
-          if (moment(task.due) < moment()) {
-            task.due = moment().format('YYYY-MM-DD')
-            modifyTask(task.uuid, task)
-          }
-        })
-      this.$emit('reloadTask')
     },
     doneTask (task) {
       const { doneTask } = require('@/../modules/taskwarrior')
