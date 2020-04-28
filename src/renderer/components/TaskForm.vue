@@ -32,6 +32,7 @@
           <input class="input" type="text" placeholder="tags" v-model="task.tags">
         </div>
       </div>
+
       <div class="field has-addons">
         <div class="control is-expanded">
           <label class="label">Description</label>
@@ -44,7 +45,15 @@
             <font-awesome-icon icon="save" />
           </button>
         </div>
+
+        <div class="control">
+          <label class="label">Clear</label>
+          <button class="button is-light" v-on:click="clear()">
+            <font-awesome-icon icon="eraser" />
+          </button>
+        </div>
       </div>
+
     </form>
   </div>
 </template>
@@ -64,8 +73,18 @@ export default {
   },
 
   data () {
-    let task = this.seedTask ? this.seedTask : { due: new Date() }
-    task.due = moment(task.due).format('YYYY-MM-DD')
+    var task = {
+      due: moment().format('YYYY-MM-DD'),
+      project: '',
+      priority: '',
+      tags: '',
+      description: ''
+    }
+
+    if (this.seedTask) {
+      task = Object.assign(task, this.seedTask)
+      task.due = moment(this.seedTask.due).format('YYYY-MM-DD')
+    }
 
     return {
       task: task,
@@ -86,6 +105,12 @@ export default {
       }
       this.task.description = ''
       this.$emit('reloadTask')
+    },
+    clear () {
+      this.task.project = ''
+      this.task.priority = ''
+      this.task.tags = ''
+      this.task.description = ''
     }
   }
 }
