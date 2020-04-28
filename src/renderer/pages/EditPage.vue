@@ -2,9 +2,8 @@
   <div class="container">
     <h1 class="title">Edit Task</h1>
     <task-form @reloadTask="nothing" :seedTask="task" />
-    <router-link to="/">
-      Back
-    </router-link>
+
+    <router-link to="/">Back</router-link>
   </div>
 </template>
 
@@ -13,10 +12,6 @@ import TaskForm from '@/components/TaskForm.vue'
 
 export default {
   name: 'edit-page',
-  validate ({ params }) {
-    console.log(params)
-    return true
-  },
   components: {
     TaskForm
   },
