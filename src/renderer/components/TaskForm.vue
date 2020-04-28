@@ -50,6 +50,13 @@
 </template>
 
 <script>
+const {
+  getProjects,
+  addTask,
+  modifyTask
+} = require('@/../modules/taskwarrior')
+const moment = require('moment')
+
 export default {
   name: 'task-form',
   props: {
@@ -57,9 +64,6 @@ export default {
   },
 
   data () {
-    const { getProjects } = require('@/../modules/taskwarrior')
-    const moment = require('moment')
-
     let task = this.seedTask ? this.seedTask : { due: new Date() }
     task.due = moment(task.due).format('YYYY-MM-DD')
 
@@ -72,13 +76,11 @@ export default {
   methods: {
     save () {
       if (this.task.uuid !== undefined) {
-        const { modifyTask } = require('@/../modules/taskwarrior')
         console.log('update')
         modifyTask(this.task.uuid, this.task)
 
         this.$router.push('/')
       } else {
-        const { addTask } = require('@/../modules/taskwarrior')
         console.log('create')
         addTask(this.task)
       }

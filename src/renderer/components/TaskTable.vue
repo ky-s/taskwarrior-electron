@@ -41,6 +41,9 @@
 </template>
 
 <script>
+const { doneTask, deleteTask } = require('@/../modules/taskwarrior')
+const moment = require('moment')
+
 export default {
   name: 'tasks-table',
   props: {
@@ -52,7 +55,6 @@ export default {
         return 'has-background-grey-light'
       }
 
-      const moment = require('moment')
       const due = moment(task.due)
       const today = moment()
 
@@ -74,18 +76,15 @@ export default {
       return `/edit/${task.uuid}`
     },
     dateFormat (due) {
-      const moment = require('moment')
       return moment(due).format('YYYY-MM-DD')
     },
     doneTask (task) {
-      const { doneTask } = require('@/../modules/taskwarrior')
       if (doneTask(task.uuid)) {
         this.$emit('reloadTask')
       }
     },
     deleteTask (task) {
       if (window.confirm('Are you sure?')) {
-        const { deleteTask } = require('@/../modules/taskwarrior')
         if (deleteTask(task.uuid)) {
           this.$emit('reloadTask')
         }
