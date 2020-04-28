@@ -11,7 +11,7 @@
         <th style="width: 10%">Edit/Delete</th>
       </tr>
     </thead>
-    <tbody v-model="showDone">
+    <tbody>
       <tr v-for="(task, i) in tasks" :key="i" :class="getRowClass(task)">
         <td>
           <input type="checkbox" :checked="task.status == 'completed'" :disabled="task.status == 'completed'" v-on:change="doneTask(task)">
@@ -44,13 +44,12 @@
 export default {
   name: 'tasks-table',
   props: {
-    tasks: Array,
-    showDone: Boolean
+    tasks: Array
   },
   methods: {
     getRowClass (task) {
       if (task.status === 'completed') {
-        return this.showDone ? 'has-background-grey-light' : 'is-hidden'
+        return 'has-background-grey-light'
       }
 
       const moment = require('moment')

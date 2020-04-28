@@ -17,7 +17,8 @@
       <p>Redue</p>
     </button>
 
-    <task-table :tasks="tasks" :showDone="showDone" @reloadTask="reloadTask" />
+    <task-table :tasks="tasks" @reloadTask="reloadTask" />
+    <task-table :tasks="doneTasks" @reloadTask="reloadTask" :class="showDone ? '' : 'is-hidden'" />
 
   </div>
 </template>
@@ -34,9 +35,13 @@ export default {
   },
   data: () => {
     const { getTasks } = require('@/../modules/taskwarrior')
+    const tasks = getTasks()
+    const undoneTasks = tasks.filter(task => { return task.status !== 'completed' })
+    const doneTasks = tasks.filter(task => { return task.status === 'completed' })
 
     return {
-      tasks: getTasks(),
+      tasks: undoneTasks,
+      doneTasks: doneTasks,
       showDone: false
     }
   },
