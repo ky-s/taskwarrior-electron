@@ -14,7 +14,7 @@
     <tbody>
       <tr v-for="(task, i) in tasks" :key="i" :class="getRowClass(task)">
         <td>
-          <input type="checkbox" :checked="task.status == 'completed'" :disabled="task.status == 'completed'" v-on:change="doneTask(task)">
+          <input type="checkbox" :id="`checkbox-${task.uuid}`" :checked="task.status == 'completed'" :disabled="task.status == 'completed'" v-on:change="doneTask(task)">
         </td>
         <td>{{ dateFormat(task.due) }}</td>
         <td>{{ task.project }}</td>
@@ -55,18 +55,20 @@ export default {
         return 'has-background-grey-light'
       }
 
-      const due = moment(task.due)
-      const today = moment()
+      if (task.due !== null) {
+        const due = moment(task.due)
+        const today = moment()
 
-      if (due.isBefore(moment())) {
-        if (due.year === today.year &&
-            due.month === today.month &&
-            due.date() === today.date()) {
-          // due = today
-          return 'has-text-weight-bold'
-        } else {
-          // due < today (overdue)
-          return 'has-text-weight-bold has-background-warning'
+        if (due.isBefore(moment())) {
+          if (due.year === today.year &&
+              due.month === today.month &&
+              due.date() === today.date()) {
+            // due = today
+            return 'has-text-weight-bold'
+          } else {
+            // due < today (overdue)
+            return 'has-text-weight-bold has-background-warning'
+          }
         }
       }
 
@@ -76,7 +78,10 @@ export default {
       return `/edit/${task.uuid}`
     },
     dateFormat (due) {
-      return moment(due).format('YYYY-MM-DD')
+      if (due) {
+        return moment(due).format('YYYY-MM-DD')
+      }
+      return ''
     },
     doneTask (task) {
       if (doneTask(task.uuid)) {
