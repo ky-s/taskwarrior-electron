@@ -3,23 +3,32 @@
     <h1 class="title">Tasks</h1>
 
     <task-form @reloadTask="reloadTask" />
-    <hr>
 
-    <button class="button is-dark" v-on:click="redue()">
-      <span class="icon">
-        <font-awesome-icon icon="calendar-check" />
-      </span>
-      <p>Redue</p>
-    </button>
+    <div class="tabs is-fullwidth is-boxed" v-model="activeTab" style="padding-top: 10px">
+      <ul>
+        <li :class="activeTab == 'todo' ? 'is-active' : ''" v-on:click="activeTab = 'todo'">
+          <a>Todo</a>
+        </li>
+        <li :class="activeTab == 'done' ? 'is-active' : ''" v-on:click="activeTab = 'done'">
+          <a>Done</a>
+        </li>
+      </ul>
+    </div>
 
-    <task-table :tasks="undoneTasks" @reloadTask="reloadTask" />
+    <div :class="activeTab == 'todo' ? '' : 'is-hidden'">
+      <button class="button is-dark" v-on:click="redue()">
+        <span class="icon">
+          <font-awesome-icon icon="calendar-check" />
+        </span>
+        <p>Overdue to Today</p>
+      </button>
 
-    <label class="checkbox">
-      <input type="checkbox" v-model="showDone">
-      show done
-    </label>
+      <task-table :tasks="undoneTasks" @reloadTask="reloadTask" />
+    </div>
 
-   <task-table :tasks="doneTasks" @reloadTask="reloadTask" :class="showDone ? '' : 'is-hidden'" />
+    <div :class="activeTab == 'done' ? '' : 'is-hidden'">
+      <task-table :tasks="doneTasks" @reloadTask="reloadTask" :class="true ? '' : 'is-hidden'" />
+    </div>
 
   </div>
 </template>
@@ -40,7 +49,7 @@ export default {
     return {
       undoneTasks: getUndoneTasks(),
       doneTasks: getDoneTasks(),
-      showDone: false
+      activeTab: 'todo'
     }
   },
   methods: {
