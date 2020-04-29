@@ -3,7 +3,7 @@
     <h1 class="title">
       <router-link to="/">Tasks</router-link> > {{ options.project }}
     </h1>
-    <project-links />
+    <project-links :current="options.project" />
 
     <task-board :options="options" :key="options.project" />
   </div>
