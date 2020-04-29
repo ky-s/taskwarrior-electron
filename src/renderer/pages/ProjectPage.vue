@@ -1,7 +1,7 @@
 <template>
   <div class="container" v-model="options">
     <h1 class="title">
-      <router-link to="/">Tasks</router-link> > {{ options.project }}
+      <router-link to="/">Tasks</router-link> [{{ options.project }}]
     </h1>
     <project-links :current="options.project" />
 
