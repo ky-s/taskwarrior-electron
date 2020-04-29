@@ -41,9 +41,12 @@ const compareTask = (a, b) => {
   }
 }
 
-exports.exportTasks = (args = []) => {
-  args.push('export')
-  const cmd = spawnSync('task', args)
+/**
+ * get Tasks with custom filter
+ *   from `task [filter] export` command
+ */
+exports.exportTasks = (filter = []) => {
+  const cmd = spawnSync('task', filter.concat(['export']))
 
   if (cmd.stderr.length > 0) {
     throw cmd.stderr.toString()
@@ -58,34 +61,41 @@ exports.exportTasks = (args = []) => {
  * get All Tasks
  *   from `task [filter] export` command
  */
-exports.getTasks = () => {
-  return exports.exportTasks([
-    'status:pending',
-    'or',
-    'status:waiting',
-    'or',
-    'status:completed'
-  ]).sort(compareTask)
+exports.getTasks = (filter = []) => {
+  return exports.exportTasks(
+    filter.concat([
+      'status:pending',
+      'or',
+      'status:waiting',
+      'or',
+      'status:completed'
+    ])
+  ).sort(compareTask)
 }
 
-exports.getUndoneTasks = () => {
-  return exports.exportTasks([
-    'status:pending',
-    'or',
-    'status:waiting'
-  ]).sort(compareTask)
+exports.getUndoneTasks = (filter = []) => {
+  return exports.exportTasks(
+    filter.concat([
+      'status:pending',
+      'or',
+      'status:waiting'
+    ])
+  ).sort(compareTask)
 }
 
-exports.getDoneTasks = () => {
-  return exports.exportTasks([
-    'status:completed'
-  ]).sort((a, b) => { return compareTask(b, a) })
+exports.getDoneTasks = (filter = []) => {
+  return exports.exportTasks(
+    filter.concat([
+      'status:completed'
+    ])
+  ).sort((a, b) => { return compareTask(b, a) })
 }
 
 /**
  * findTask
  */
 exports.findTask = uuid => {
+  // const tasks = exports.getTasks([`uuid:${uuid}`])
   const tasks = exports.getTasks().filter(task => task.uuid === uuid)
 
   if (tasks.length === 0) {
@@ -199,6 +209,8 @@ exports.deleteTask = uuid => {
  * getProjects
  */
 exports.getProjects = () => {
-  return exports.getTasks().map(task => (task.project))
+  return exports.getTasks(['+PROJECT'])
+    .map(task => (task.project))
     .filter((project, index, self) => self.indexOf(project) === index) // = uniq
+    .filter(project => project) // = compact
 }
