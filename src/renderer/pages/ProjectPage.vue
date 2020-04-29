@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <h1 class="title">Tasks > {{ this.$route.params.project }}</h1>
-    <router-link to="/">Back</router-link>
+    <h1 class="title">
+      <router-link to="/">Tasks</router-link> > {{ this.$route.params.project }}
+    </h1>
 
     <task-form @reloadTask="reloadTask" :seedTask="{ project: this.$route.params.project }"/>
 
