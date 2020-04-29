@@ -26,7 +26,11 @@ export default {
       }
     }
   },
-  watch: {
+  watch: { // for re-render this
+    // /project/a => /project/b のときに
+    // task-board が re-render されないので
+    // task-board に :key 属性をつけておいて、
+    // :key を変更してやる必要がある
     '$route' (to, from) {
       this.options.project = to.params.project
     }
