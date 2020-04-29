@@ -8,10 +8,28 @@ import store from './store'
 import 'bulma/css/bulma.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faEdit, faTrash, faSave, faCalendarCheck, faEraser } from '@fortawesome/free-solid-svg-icons'
+import {
+  faEdit,
+  faTrash,
+  faSave,
+  faCalendarCheck,
+  faEraser,
+  faSync,
+  faList,
+  faCheckSquare
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faEdit, faTrash, faSave, faCalendarCheck, faEraser)
+library.add(
+  faEdit,
+  faTrash,
+  faSave,
+  faCalendarCheck,
+  faEraser,
+  faSync,
+  faList,
+  faCheckSquare
+)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

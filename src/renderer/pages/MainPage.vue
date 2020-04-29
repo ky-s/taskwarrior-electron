@@ -7,20 +7,33 @@
     <div class="tabs is-fullwidth is-boxed" v-model="activeTab" style="padding-top: 20px">
       <ul>
         <li :class="activeTab == 'todo' ? 'is-active' : ''" v-on:click="activeTab = 'todo'">
-          <a>Todo</a>
+          <a>
+            <span class="icon">
+              <font-awesome-icon icon="list" />
+            </span>
+            Todo
+          </a>
         </li>
         <li :class="activeTab == 'done' ? 'is-active' : ''" v-on:click="activeTab = 'done'">
-          <a>Done</a>
+          <a>
+            <span class="icon">
+              <font-awesome-icon icon="check-square" />
+            </span>
+            Done
+          </a>
         </li>
       </ul>
     </div>
 
-    <button class="button is-light" v-on:click="reloadTask()">
-      Refresh
+    <button class="button is-info is-light" v-on:click="reloadTask()">
+      <span class="icon">
+        <font-awesome-icon icon="sync" />
+      </span>
+      <p>Refresh</p>
     </button>
 
     <span :class="activeTab == 'todo' ? '' : 'is-hidden'">
-      <button class="button is-dark" v-on:click="redue()">
+      <button class="button is-danger is-light" v-on:click="redue()">
         <span class="icon">
           <font-awesome-icon icon="calendar-check" />
         </span>
