@@ -26,12 +26,6 @@ const { spawnSync, execSync } = require('child_process')
 // exports.Task = Task
 
 const compareTask = (a, b) => {
-  if (a.status === 'completed' && b.status !== 'completed') {
-    return 1
-  } else if (a.status !== 'completed' && b.status === 'completed') {
-    return -1
-  }
-
   if (!a.due && b.due) {
     return -1
   } else if (a.due && !b.due) {
@@ -47,41 +41,45 @@ const compareTask = (a, b) => {
   }
 }
 
-/**
- * get All Tasks
- *   from `task [filter] export` command
- */
-exports.getTasks = () => {
-  const cmd = spawnSync(
-    'task',
-    [
-      'status:pending',
-      'or',
-      'status:waiting',
-      'or',
-      'status:completed',
-      'export'
-    ]
-  )
+exports.exportTasks = (args = []) => {
+  args.push('export')
+  const cmd = spawnSync('task', args)
 
   if (cmd.stderr.length > 0) {
     throw cmd.stderr.toString()
   }
 
-  const tasksObj = JSON.parse(cmd.stdout.toString()).sort(compareTask)
+  const tasksObj = JSON.parse(cmd.stdout.toString())
   return tasksObj
-
   // return tasksObj.map(taskObj => { return new Task(taskObj) })
 }
 
+/**
+ * get All Tasks
+ *   from `task [filter] export` command
+ */
+exports.getTasks = () => {
+  return exports.exportTasks([
+    'status:pending',
+    'or',
+    'status:waiting',
+    'or',
+    'status:completed'
+  ]).sort(compareTask)
+}
+
 exports.getUndoneTasks = () => {
-  return exports.getTasks()
-    .filter(task => { return task.status !== 'completed' })
+  return exports.exportTasks([
+    'status:pending',
+    'or',
+    'status:waiting'
+  ]).sort(compareTask)
 }
 
 exports.getDoneTasks = () => {
-  return exports.getTasks()
-    .filter(task => { return task.status === 'completed' })
+  return exports.exportTasks([
+    'status:completed'
+  ]).sort((a, b) => { return compareTask(b, a) })
 }
 
 /**
