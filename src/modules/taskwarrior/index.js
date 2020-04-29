@@ -64,11 +64,7 @@ exports.exportTasks = (filter = []) => {
 exports.getTasks = (filter = []) => {
   return exports.exportTasks(
     filter.concat([
-      'status:pending',
-      'or',
-      'status:waiting',
-      'or',
-      'status:completed'
+      '( status:pending or status:waiting or status:completed )'
     ])
   ).sort(compareTask)
 }
@@ -76,9 +72,7 @@ exports.getTasks = (filter = []) => {
 exports.getUndoneTasks = (filter = []) => {
   return exports.exportTasks(
     filter.concat([
-      'status:pending',
-      'or',
-      'status:waiting'
+      '( status:pending or status:waiting )'
     ])
   ).sort(compareTask)
 }
@@ -95,8 +89,7 @@ exports.getDoneTasks = (filter = []) => {
  * findTask
  */
 exports.findTask = uuid => {
-  // const tasks = exports.getTasks([`uuid:${uuid}`])
-  const tasks = exports.getTasks().filter(task => task.uuid === uuid)
+  const tasks = exports.exportTasks([`uuid:${uuid}`])
 
   if (tasks.length === 0) {
     throw new Error(`uuid=${uuid} task not found`)
