@@ -14,7 +14,7 @@
     <tbody>
       <tr v-for="(task, i) in tasks" :key="i" :class="getRowClass(task)">
         <td>
-          <input type="checkbox" :id="`checkbox-${task.uuid}`" :checked="task.status == 'completed'" :disabled="task.status == 'completed'" v-on:change="doneTask(task)">
+          <input type="checkbox" :id="`checkbox-${task.uuid}`" :checked="task.status == 'completed'" v-on:change="doneOrUndoneTask(task)">
         </td>
         <td>{{ dateFormat(task.due) }}</td>
         <td>{{ task.project }}</td>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-const { doneTask, deleteTask } = require('@/../modules/taskwarrior')
+const { doneTask, undoneTask, deleteTask, findTask } = require('@/../modules/taskwarrior')
 const moment = require('moment')
 
 export default {
@@ -83,10 +83,15 @@ export default {
       }
       return ''
     },
-    doneTask (task) {
-      if (doneTask(task.uuid)) {
-        this.$emit('reloadTask')
+    doneOrUndoneTask (task) {
+      const checkbox = document.getElementById(`checkbox-${task.uuid}`)
+
+      if (checkbox.checked) {
+        doneTask(task.uuid)
+      } else {
+        undoneTask(task.uuid)
       }
+      Object.assign(task, findTask(task.uuid))
     },
     deleteTask (task) {
       if (window.confirm('Are you sure?')) {
