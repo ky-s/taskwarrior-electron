@@ -1,16 +1,9 @@
 <template>
   <div class="container">
-    <h1 class="title">Tasks</h1>
-    <span>projects:</span>
-    <span v-for="project in projects">
-      <router-link :to="`/project/${project}`">
-        <button class="button is-outlined is-link is-small" style="margin-left: 5px">
-          <p>{{ project }}</p>
-        </button>
-      </router-link>
-    </span>
+    <h1 class="title">Tasks > {{ this.$route.params.project }}</h1>
+    <router-link to="/">Back</router-link>
 
-    <task-form @reloadTask="reloadTask" />
+    <task-form @reloadTask="reloadTask" :seedTask="{ project: this.$route.params.project }"/>
 
     <div class="tabs is-fullwidth is-boxed" v-model="activeTab" style="padding-top: 20px">
       <ul>
@@ -62,28 +55,29 @@
 import TaskForm from '@/components/TaskForm.vue'
 import TaskTable from '@/components/TaskTable.vue'
 
-const { getUndoneTasks, getDoneTasks, getProjects } = require('@/../modules/taskwarrior')
+const { getUndoneTasks, getDoneTasks } = require('@/../modules/taskwarrior')
 
 export default {
-  name: 'main-page',
+  name: 'project-page',
   components: {
     TaskTable,
     TaskForm
   },
-  data: () => {
-    console.log(getProjects())
+  data: function () {
+    const projectFilter = [`project:${this.$route.params.project}`]
+
     return {
-      undoneTasks: getUndoneTasks(),
-      doneTasks: getDoneTasks(),
+      undoneTasks: getUndoneTasks(projectFilter),
+      doneTasks: getDoneTasks(projectFilter),
       activeTab: 'todo',
-      projects: getProjects()
+      projectFilter: projectFilter
     }
   },
   methods: {
     reloadTask () {
       console.log('reload')
-      this.undoneTasks = getUndoneTasks()
-      this.doneTasks = getDoneTasks()
+      this.undoneTasks = getUndoneTasks(this.projectFilter)
+      this.doneTasks = getDoneTasks(this.projectFilter)
     },
     redue () {
       const moment = require('moment')
