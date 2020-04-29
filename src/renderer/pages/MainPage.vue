@@ -15,11 +15,11 @@
       </ul>
     </div>
 
-    <button class="button is-light is-pulled-right" v-on:click="reloadTask()">
+    <button class="button is-light" v-on:click="reloadTask()">
       Refresh
     </button>
 
-    <div :class="activeTab == 'todo' ? '' : 'is-hidden'">
+    <span :class="activeTab == 'todo' ? '' : 'is-hidden'">
       <button class="button is-dark" v-on:click="redue()">
         <span class="icon">
           <font-awesome-icon icon="calendar-check" />
@@ -28,11 +28,11 @@
       </button>
 
       <task-table :tasks="undoneTasks" @reloadTask="reloadTask" />
-    </div>
+    </span>
 
-    <div :class="activeTab == 'done' ? '' : 'is-hidden'">
+    <span :class="activeTab == 'done' ? '' : 'is-hidden'">
       <task-table :tasks="doneTasks" @reloadTask="reloadTask" />
-    </div>
+    </span>
 
   </div>
 </template>
