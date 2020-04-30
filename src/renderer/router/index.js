@@ -7,16 +7,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'main-page',
-      component: require('@/pages/MainPage').default
-    },
-    {
-      path: '/project/:project',
-      name: 'project-page',
-      component: require('@/pages/ProjectPage').default
-    },
-    {
-      path: '/tasks',
       name: 'tasks-page',
       component: require('@/pages/TasksPage').default
     },
