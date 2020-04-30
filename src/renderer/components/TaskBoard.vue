@@ -2,7 +2,7 @@
   <div>
     <task-form @reloadTask="reloadTask" :seedTask="formTask" />
 
-    <div class="tabs is-fullwidth is-boxed" v-model="activeTab" style="padding-top: 20px">
+    <div class="tabs is-fullwidth is-toggle" v-model="activeTab" style="padding-top: 20px">
       <ul>
         <li :class="activeTab == 'todo' ? 'is-active' : ''" v-on:click="activeTab = 'todo'">
           <a>
@@ -31,7 +31,7 @@
     </button>
 
     <span :class="activeTab == 'todo' ? '' : 'is-hidden'">
-      <button class="button is-danger is-light" v-on:click="redue()">
+      <button class="button is-danger is-light" v-on:click="redue()" v-if="overdueTasks().length > 0">
         <span class="icon">
           <font-awesome-icon icon="calendar-check" />
         </span>
@@ -52,7 +52,8 @@
 import TaskForm from '@/components/TaskForm.vue'
 import TaskTable from '@/components/TaskTable.vue'
 
-const { getUndoneTasks, getDoneTasks } = require('@/../modules/taskwarrior')
+const { getUndoneTasks, getDoneTasks, modifyTask } = require('@/../modules/taskwarrior')
+const moment = require('moment')
 
 export default {
   components: {
@@ -88,17 +89,20 @@ export default {
       this.doneTasks = getDoneTasks(this.filter)
     },
     redue () {
-      const moment = require('moment')
-      const { modifyTask } = require('@/../modules/taskwarrior')
-
-      this.undoneTasks
+      this.overdueTasks()
         .forEach(task => {
-          if (moment(task.due) < moment()) {
-            task.due = moment().format('YYYY-MM-DD')
-            modifyTask(task.uuid, task)
-          }
+          task.due = moment().format('YYYY-MM-DD')
+          modifyTask(task.uuid, task)
         })
       this.reloadTask()
+    },
+    overdueTasks () {
+      const today = moment(
+        new Date().setHours(0, 0, 0, 0) // beginning of day
+      )
+
+      return this.undoneTasks
+        .filter(task => moment(task.due) < today)
     }
   }
 }
