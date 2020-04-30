@@ -107,7 +107,7 @@ export default {
       this.$emit('reloadTask')
     },
     clear () {
-      this.task.project = ''
+      // 日付と Project はそのままがいいので clear しない
       this.task.priority = ''
       this.task.tags = ''
       this.task.description = ''
