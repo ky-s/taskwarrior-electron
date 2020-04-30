@@ -4,6 +4,8 @@
 
     <project-links />
 
+    <hr>
+
     <task-board />
   </div>
 </template>

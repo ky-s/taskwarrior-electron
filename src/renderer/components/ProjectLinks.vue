@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="has-text-weight-semibold">projects:</span>
+    <span class="has-text-weight-semibold">Projects:</span>
     <span v-for="project in projects">
       <router-link :to="`/project/${project}`">
         <button :class="getProjectClass(project)" style="margin-left: 5px">

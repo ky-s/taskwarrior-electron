@@ -5,6 +5,8 @@
     </h1>
     <project-links :current="options.project" />
 
+    <hr>
+
     <task-board :options="options" :key="options.project" />
   </div>
 </template>

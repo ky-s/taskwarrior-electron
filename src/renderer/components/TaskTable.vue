@@ -8,7 +8,7 @@
         <th style="width: 5%"><abbr title="priority">Priority</abbr></th>
         <th style="width: 10%"><abbr title="tags">Tags</abbr></th>
         <th><abbr title="description">Description</abbr></th>
-        <th style="width: 10%">Edit/Delete</th>
+        <th style="width: 10%"><abbr title="edit-dealete">Edit/Delete</abbr></th>
       </tr>
     </thead>
     <tbody>
