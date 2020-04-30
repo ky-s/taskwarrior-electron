@@ -2,6 +2,14 @@
   <div class="container">
     <h1 class="title">Tasks</h1>
 
+    <span>
+      <router-link to="/tasks">
+        <button class="button is-primary is-small" style="margin-left: 5px">
+          <p>Tasks</p>
+        </button>
+      </router-link>
+    </span>
+
     <project-links />
 
     <hr>

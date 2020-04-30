@@ -16,6 +16,11 @@ export default new Router({
       component: require('@/pages/ProjectPage').default
     },
     {
+      path: '/tasks',
+      name: 'tasks-page',
+      component: require('@/pages/TasksPage').default
+    },
+    {
       path: '/edit/:uuid',
       name: 'edit-page',
       component: require('@/pages/EditPage').default
