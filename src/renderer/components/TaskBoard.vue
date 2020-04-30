@@ -2,7 +2,7 @@
   <div>
     <task-form @reloadTask="reloadTask" :seedTask="seedTask" />
 
-    <div class="tabs is-fullwidth is-toggle" v-model="activeTab" style="padding-top: 20px">
+    <div class="tabs is-fullwidth is-toggle" style="padding-top: 20px">
       <ul>
         <li :class="activeTab == 'todo' ? 'is-active' : ''" v-on:click="activeTab = 'todo'">
           <a>

@@ -22,7 +22,7 @@
 
     <hr>
 
-    <task-board :filters="filters" v-model="filters" :key="rerender" />
+    <task-board :filters="filters" :key="rerender" />
   </div>
 </template>
 
