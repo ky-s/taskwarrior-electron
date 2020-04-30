@@ -1,6 +1,6 @@
 <template>
   <div>
-    <task-form @reloadTask="reloadTask" :seedTask="formTask" />
+    <task-form @reloadTask="reloadTask" :seedTask="seedTask" />
 
     <div class="tabs is-fullwidth is-toggle" v-model="activeTab" style="padding-top: 20px">
       <ul>
@@ -64,29 +64,24 @@ export default {
     options: Object
   },
   data: function () {
-    let filter
-    let formTask
-    if (this.options) {
-      filter = [`project:${this.options.project}`]
-      formTask = { project: this.options.project }
-    } else {
-      filter = []
-      formTask = {}
-    }
+    const seedTask = this.options || {}
+    const filters = Object.keys(seedTask).reduce(
+      (acc, key) => acc.concat(`${key}:${seedTask[key]}`),
+      [])
 
     return {
-      formTask: formTask,
-      undoneTasks: getUndoneTasks(filter),
-      doneTasks: getDoneTasks(filter),
-      filter: filter,
+      seedTask: seedTask,
+      undoneTasks: getUndoneTasks(filters),
+      doneTasks: getDoneTasks(filters),
+      filters: filters,
       activeTab: 'todo'
     }
   },
   methods: {
     reloadTask () {
       console.log('reload')
-      this.undoneTasks = getUndoneTasks(this.filter)
-      this.doneTasks = getDoneTasks(this.filter)
+      this.undoneTasks = getUndoneTasks(this.filters)
+      this.doneTasks = getDoneTasks(this.filters)
     },
     redue () {
       this.overdueTasks()

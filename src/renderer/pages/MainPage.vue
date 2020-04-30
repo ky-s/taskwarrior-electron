@@ -6,7 +6,7 @@
 
     <hr>
 
-    <task-board />
+    <task-board :options="options" :key="options.due" />
   </div>
 </template>
 
@@ -19,6 +19,16 @@ export default {
   components: {
     ProjectLinks,
     TaskBoard
+  },
+  data: function () {
+    const options = this.$route.query || {}
+
+    return { options: options }
+  },
+  watch: { // for re-render this
+    '$route' (to, from) {
+      this.options = to.query || {}
+    }
   }
 }
 </script>
