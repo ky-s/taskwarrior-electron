@@ -61,27 +61,25 @@ export default {
     TaskForm
   },
   props: {
-    options: Object
+    filters: Object
   },
   data: function () {
-    const seedTask = this.options || {}
-    const filters = Object.keys(seedTask).reduce(
-      (acc, key) => acc.concat(`${key}:${seedTask[key]}`),
-      [])
+    const filterOptions = this.filterOptions()
 
     return {
-      seedTask: seedTask,
-      undoneTasks: getUndoneTasks(filters),
-      doneTasks: getDoneTasks(filters),
-      filters: filters,
+      seedTask: this.filters || {},
+      undoneTasks: getUndoneTasks(filterOptions),
+      doneTasks: getDoneTasks(filterOptions),
       activeTab: 'todo'
     }
   },
   methods: {
     reloadTask () {
       console.log('reload')
-      this.undoneTasks = getUndoneTasks(this.filters)
-      this.doneTasks = getDoneTasks(this.filters)
+      const filterOptions = this.filterOptions()
+
+      this.undoneTasks = getUndoneTasks(filterOptions)
+      this.doneTasks = getDoneTasks(filterOptions)
     },
     redue () {
       this.overdueTasks()
@@ -98,6 +96,12 @@ export default {
 
       return this.undoneTasks
         .filter(task => moment(task.due) < today)
+    },
+    filterOptions () {
+      const filters = this.filters
+      return Object.keys(filters).reduce(
+        (acc, key) => acc.concat(`${key}:${filters[key]}`),
+        [])
     }
   }
 }

@@ -14,7 +14,7 @@
       </button>
     </span>
 
-    <span v-if="this.options.project">
+    <span v-if="this.filters.project">
       <button class="button is-light is-small" style="margin-left: 5px" v-on:click="setProject(null)">
         <p>Reset</p>
       </button>
@@ -22,7 +22,7 @@
 
     <hr>
 
-    <task-board :options="options" v-model="options" :key="rerender" />
+    <task-board :filters="filters" v-model="filters" :key="rerender" />
   </div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
   },
   data: function () {
     return {
-      options: {},
+      filters: {},
       projects: getProjects(),
       rerender: 0
     }
@@ -46,22 +46,22 @@ export default {
   methods: {
     getProjectClass (project) {
       return 'button is-primary is-small ' +
-        (this.options.project === project ? '' : 'is-outlined')
+        (this.filters.project === project ? '' : 'is-outlined')
     },
     updateFilters () {
       if (document.getElementById('checkbox-today').checked) {
-        this.options.due = moment().format('YYYY-MM-DD')
+        this.filters.due = moment().format('YYYY-MM-DD')
       } else {
-        delete this.options.due
+        delete this.filters.due
       }
 
       this.rerender++
     },
     setProject (project) {
       if (project) {
-        this.options.project = project
+        this.filters.project = project
       } else {
-        delete this.options.project
+        delete this.filters.project
       }
       this.rerender++
     }
