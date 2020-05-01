@@ -3,7 +3,7 @@
     <h1 class="title">Tasks</h1>
 
     <label class="checkbox is-pulled-right">
-      <input type="checkbox" id="checkbox-today" @change="updateFilters()">
+      <input type="checkbox" id="checkbox-today" @change="toggleTodayFilter()">
       TodayOnly
     </label>
 
@@ -48,7 +48,7 @@ export default {
       return 'button is-primary is-small ' +
         (this.filters.project === project ? '' : 'is-outlined')
     },
-    updateFilters () {
+    toggleTodayFilter () {
       if (document.getElementById('checkbox-today').checked) {
         this.filters.due = moment().format('YYYY-MM-DD')
       } else {
