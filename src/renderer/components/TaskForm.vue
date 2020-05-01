@@ -41,14 +41,14 @@
 
         <div class="control">
           <label class="label">Save</label>
-          <button class="button is-success" v-on:click="save()">
+          <button class="button is-success" @click="save()">
             <font-awesome-icon icon="save" />
           </button>
         </div>
 
         <div class="control">
           <label class="label">Clear</label>
-          <button class="button is-light" v-on:click="clear()">
+          <button class="button is-light" @click="clear()">
             <font-awesome-icon icon="eraser" />
           </button>
         </div>

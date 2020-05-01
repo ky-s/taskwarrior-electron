@@ -14,7 +14,7 @@
     <tbody>
       <tr v-for="(task, i) in tasks" :key="i" :class="getRowClass(task)">
         <td>
-          <input type="checkbox" :id="`checkbox-${task.uuid}`" :checked="task.status == 'completed'" v-on:change="doneOrUndoneTask(task)">
+          <input type="checkbox" :id="`checkbox-${task.uuid}`" :checked="task.status == 'completed'" @change="doneOrUndoneTask(task)">
         </td>
         <td>{{ dateFormat(task.due) }}</td>
         <td>{{ task.project }}</td>
@@ -29,7 +29,7 @@
               </span>
             </button>
           </router-link>
-          <button class="button is-danger" v-on:click="deleteTask(task)">
+          <button class="button is-danger" @click="deleteTask(task)">
             <span class="icon">
               <font-awesome-icon icon="trash" />
             </span>

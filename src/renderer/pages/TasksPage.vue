@@ -3,19 +3,19 @@
     <h1 class="title">Tasks</h1>
 
     <label class="checkbox is-pulled-right">
-      <input type="checkbox" id="checkbox-today" v-on:change="updateFilters()">
+      <input type="checkbox" id="checkbox-today" @change="updateFilters()">
       TodayOnly
     </label>
 
     <span class="has-text-weight-semibold">Projects:</span>
     <span v-for="project in projects">
-      <button :class="getProjectClass(project)" style="margin-left: 5px" v-on:click="setProject(project)">
+      <button :class="getProjectClass(project)" style="margin-left: 5px" @click="setProject(project)">
         <p>{{ project }}</p>
       </button>
     </span>
 
     <span v-if="this.filters.project">
-      <button class="button is-light is-small" style="margin-left: 5px" v-on:click="setProject(null)">
+      <button class="button is-light is-small" style="margin-left: 5px" @click="setProject(null)">
         <p>Reset</p>
       </button>
     </span>

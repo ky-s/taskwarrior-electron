@@ -4,7 +4,7 @@
 
     <div class="tabs is-fullwidth is-toggle" style="padding-top: 20px">
       <ul>
-        <li :class="activeTab == 'todo' ? 'is-active' : ''" v-on:click="activeTab = 'todo'">
+        <li :class="activeTab == 'todo' ? 'is-active' : ''" @click="activeTab = 'todo'">
           <a>
             <span class="icon">
               <font-awesome-icon icon="list" />
@@ -12,7 +12,7 @@
             Todo
           </a>
         </li>
-        <li :class="activeTab == 'done' ? 'is-active' : ''" v-on:click="activeTab = 'done'">
+        <li :class="activeTab == 'done' ? 'is-active' : ''" @click="activeTab = 'done'">
           <a>
             <span class="icon">
               <font-awesome-icon icon="check-square" />
@@ -23,7 +23,7 @@
       </ul>
     </div>
 
-    <button class="button is-info is-light" v-on:click="reloadTask()">
+    <button class="button is-info is-light" @click="reloadTask()">
       <span class="icon">
         <font-awesome-icon icon="sync" />
       </span>
@@ -31,7 +31,7 @@
     </button>
 
     <span :class="activeTab == 'todo' ? '' : 'is-hidden'">
-      <button class="button is-danger is-light" v-on:click="redue()" v-if="overdueTasks().length > 0">
+      <button class="button is-danger is-light" @click="redue()" v-if="overdueTasks().length > 0">
         <span class="icon">
           <font-awesome-icon icon="calendar-check" />
         </span>
