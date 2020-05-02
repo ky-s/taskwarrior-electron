@@ -1,7 +1,7 @@
 <template>
   <span>
     <label class="checkbox">
-      <input type="checkbox" id="checkbox-today" @change="toggle()">
+      <input type="checkbox" v-model="checked">
       Today Only
     </label>
   </span>
@@ -14,11 +14,12 @@ export default {
   props: {
     value: String
   },
-  methods: {
-    toggle () {
-      const checked = document.getElementById('checkbox-today').checked
-
-      this.$emit('input', checked ? moment().format('YYYY-MM-DD') : null)
+  data () {
+    return { checked: false }
+  },
+  watch: {
+    checked: function (checked) {
+      this.$emit('input', checked ? moment().format('YYYY-MM-DD') : '')
     }
   }
 }
