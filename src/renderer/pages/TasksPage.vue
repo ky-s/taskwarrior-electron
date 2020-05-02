@@ -2,10 +2,7 @@
   <div class="container">
     <h1 class="title">Tasks</h1>
 
-    <label class="checkbox is-pulled-right">
-      <input type="checkbox" id="checkbox-today" @change="toggleTodayFilter()">
-      TodayOnly
-    </label>
+    <check-box-today-only v-model="filters.due" class="is-pulled-right" />
 
     <select-project v-model="filters.project" />
 
@@ -17,6 +14,7 @@
 
 <script>
 import SelectProject from '@/components/SelectProject.vue'
+import CheckBoxTodayOnly from '@/components/CheckBoxTodayOnly.vue'
 import TaskBoard from '@/components/TaskBoard.vue'
 const moment = require('moment')
 
@@ -24,6 +22,7 @@ export default {
   name: 'tasks-page',
   components: {
     SelectProject,
+    CheckBoxTodayOnly,
     TaskBoard
   },
   data: function () {
