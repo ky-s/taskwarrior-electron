@@ -24,15 +24,11 @@
         <td>
           <router-link :to="getEditLink(task)">
             <button class="button is-primary">
-              <span class="icon">
-                <font-awesome-icon icon="edit" />
-              </span>
+              <bulma-awesome-icon icon="edit" />
             </button>
           </router-link>
           <button class="button is-danger" @click="deleteTask(task)">
-            <span class="icon">
-              <font-awesome-icon icon="trash" />
-            </span>
+            <bulma-awesome-icon icon="trash" />
           </button>
         </td>
       </tr>

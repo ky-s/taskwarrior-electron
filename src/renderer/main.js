@@ -20,6 +20,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import BulmaAwesomeIcon from '@/components/shared/BulmaAwesomeIcon.vue'
+
 library.add(
   faEdit,
   faTrash,
@@ -32,6 +34,7 @@ library.add(
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('bulma-awesome-icon', BulmaAwesomeIcon)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios

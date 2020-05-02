@@ -6,17 +6,13 @@
       <ul>
         <li :class="activeTab == 'todo' ? 'is-active' : ''" @click="activeTab = 'todo'">
           <a>
-            <span class="icon">
-              <font-awesome-icon icon="list" />
-            </span>
+            <bulma-awesome-icon icon="list" />
             Todo
           </a>
         </li>
         <li :class="activeTab == 'done' ? 'is-active' : ''" @click="activeTab = 'done'">
           <a>
-            <span class="icon">
-              <font-awesome-icon icon="check-square" />
-            </span>
+            <bulma-awesome-icon icon="check-square" />
             Done
           </a>
         </li>
@@ -24,17 +20,13 @@
     </div>
 
     <button class="button is-info is-light" @click="reloadTask()">
-      <span class="icon">
-        <font-awesome-icon icon="sync" />
-      </span>
+      <bulma-awesome-icon icon="sync" />
       <p>Refresh</p>
     </button>
 
     <span :class="activeTab == 'todo' ? '' : 'is-hidden'">
       <button class="button is-danger is-light" @click="redue()" v-if="overdueTasks().length > 0">
-        <span class="icon">
-          <font-awesome-icon icon="calendar-check" />
-        </span>
+        <bulma-awesome-icon icon="calendar-check" />
         <p>Overdue to Today</p>
       </button>
 
