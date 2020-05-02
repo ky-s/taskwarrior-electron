@@ -36,6 +36,15 @@ library.add(
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('bulma-awesome-icon', BulmaAwesomeIcon)
 
+// `v-focus` というグローバルカスタムディレクティブを登録します
+Vue.directive('focus', {
+  // ひも付いている要素が DOM に挿入される時...
+  inserted: function (el) {
+    // 要素にフォーカスを当てる
+    el.focus()
+  }
+})
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false

@@ -36,7 +36,7 @@
       <div class="field has-addons">
         <div class="control is-expanded">
           <label class="label">Description</label>
-          <input class="input" type="text" placeholder="description" v-model="task.description">
+          <input class="input" type="text" placeholder="description" v-model="task.description" v-focus>
         </div>
 
         <div class="control">
