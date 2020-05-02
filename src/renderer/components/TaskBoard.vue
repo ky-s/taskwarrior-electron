@@ -91,9 +91,12 @@ export default {
     },
     filterOptions () {
       const filters = this.filters
-      return Object.keys(filters).reduce(
-        (acc, key) => acc.concat(`${key}:${filters[key]}`),
-        [])
+      return Object.keys(filters).reduce((acc, key) => {
+        if ((filters[key] !== null) && (filters[key] !== undefined)) {
+          acc = acc.concat(`${key}:${filters[key]}`)
+        }
+        return acc
+      }, [])
     }
   }
 }
