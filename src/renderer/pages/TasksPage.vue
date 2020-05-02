@@ -16,7 +16,6 @@
 import SelectProject from '@/components/SelectProject.vue'
 import CheckBoxTodayOnly from '@/components/CheckBoxTodayOnly.vue'
 import TaskBoard from '@/components/TaskBoard.vue'
-const moment = require('moment')
 
 export default {
   name: 'tasks-page',
@@ -32,13 +31,6 @@ export default {
     }
   },
   methods: {
-    toggleTodayFilter () {
-      if (document.getElementById('checkbox-today').checked) {
-        this.filters.due = moment().format('YYYY-MM-DD')
-      } else {
-        delete this.filters.due
-      }
-    },
     reload () {
       this.rerender++
     }
