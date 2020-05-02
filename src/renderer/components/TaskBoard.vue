@@ -2,22 +2,7 @@
   <div>
     <task-form @reloadTask="reloadTask" :seedTask="seedTask" />
 
-    <div class="tabs is-fullwidth is-toggle" style="padding-top: 20px">
-      <ul>
-        <li :class="activeTab == 'todo' ? 'is-active' : ''" @click="activeTab = 'todo'">
-          <a>
-            <bulma-awesome-icon icon="list" />
-            Todo
-          </a>
-        </li>
-        <li :class="activeTab == 'done' ? 'is-active' : ''" @click="activeTab = 'done'">
-          <a>
-            <bulma-awesome-icon icon="check-square" />
-            Done
-          </a>
-        </li>
-      </ul>
-    </div>
+    <tabs v-model="activeTab" />
 
     <button class="button is-info is-light" @click="reloadTask()">
       <bulma-awesome-icon icon="sync" />
@@ -42,6 +27,7 @@
 
 <script>
 import TaskForm from '@/components/TaskForm.vue'
+import Tabs from '@/components/Tabs.vue'
 import TaskTable from '@/components/TaskTable.vue'
 
 const { getUndoneTasks, getDoneTasks, modifyTask } = require('@/../modules/taskwarrior')
@@ -49,8 +35,9 @@ const moment = require('moment')
 
 export default {
   components: {
-    TaskTable,
-    TaskForm
+    TaskForm,
+    Tabs,
+    TaskTable
   },
   props: {
     filters: Object
