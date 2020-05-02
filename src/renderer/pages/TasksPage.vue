@@ -8,7 +8,7 @@
 
     <hr>
 
-    <task-board :filters="filters" :key="rerender" />
+    <task-board :filters="rejectNull(filters)" :key="rerender" />
   </div>
 </template>
 
@@ -31,6 +31,14 @@ export default {
     }
   },
   methods: {
+    rejectNull (obj) {
+      return Object.keys(obj)
+        .filter(key => obj[key] !== null && obj[key] !== undefined)
+        .reduce((acc, key) => {
+          acc[key] = obj[key]
+          return acc
+        }, {})
+    },
     reload () {
       this.rerender++
     }

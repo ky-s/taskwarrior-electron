@@ -45,6 +45,8 @@ export default {
   data: function () {
     const filterOptions = this.filterOptions()
 
+    console.log(this.filters)
+
     return {
       seedTask: this.filters || {},
       undoneTasks: getUndoneTasks(filterOptions),

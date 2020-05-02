@@ -19,7 +19,7 @@ export default {
   },
   watch: {
     checked: function (checked) {
-      this.$emit('input', checked ? moment().format('YYYY-MM-DD') : '')
+      this.$emit('input', checked ? moment().format('YYYY-MM-DD') : null)
     }
   }
 }
