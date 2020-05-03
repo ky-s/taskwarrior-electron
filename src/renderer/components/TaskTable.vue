@@ -22,11 +22,9 @@
         <td>{{ (task.tags || []).join(', ') }}</td>
         <td>{{ task.description }}</td>
         <td>
-          <router-link :to="getEditLink(task)">
-            <button class="button is-primary">
-              <bulma-awesome-icon icon="edit" />
-            </button>
-          </router-link>
+          <button class="button is-primary" @click="$emit('setForm', task.uuid)">
+            <bulma-awesome-icon icon="edit" />
+          </button>
           <button class="button is-danger" @click="deleteTask(task)">
             <bulma-awesome-icon icon="trash" />
           </button>

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p>{{ task.uuid ? `Edit: uuid=${task.uuid}` : 'New' }}</p>
     <form>
       <div class="field has-addons">
         <div class="control">
@@ -52,6 +53,10 @@
             <bulma-awesome-icon icon="eraser" />
           </button>
         </div>
+        <div class="control" v-if="task.uuid">
+          <label class="label">Cancel</label>
+          <button class="button is-info" @click="task.uuid = null">Cancel</button>
+        </div>
       </div>
 
     </form>
@@ -94,15 +99,14 @@ export default {
 
   methods: {
     save () {
-      if (this.task.uuid !== undefined) {
+      if (this.task.uuid) {
         console.log('update')
         modifyTask(this.task.uuid, this.task)
-
-        this.$router.push('/')
       } else {
         console.log('create')
         addTask(this.task)
       }
+      this.task.uuid = null
       this.task.description = ''
       this.$emit('reloadTask')
     },

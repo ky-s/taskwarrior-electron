@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" :key="rerender">
     <h1 class="title">Tasks</h1>
 
     <check-box-today-only v-model="filters.due" class="is-pulled-right" />
@@ -8,7 +8,7 @@
 
     <hr>
 
-    <task-board :filters="rejectNull(filters)" :key="rerender" />
+    <task-board :filters="rejectNull(filters)" />
   </div>
 </template>
 
@@ -38,9 +38,6 @@ export default {
           acc[key] = obj[key]
           return acc
         }, {})
-    },
-    reload () {
-      this.rerender++
     }
   },
   watch: {

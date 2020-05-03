@@ -1,6 +1,6 @@
 <template>
   <div>
-    <task-form @reloadTask="reloadTask" :seedTask="seedTask" />
+    <task-form :seedTask="seedTask" @reloadTask="reloadTask" :key="formRerender" />
 
     <tabs v-model="activeTab" />
 
@@ -15,11 +15,11 @@
         <p>Overdue to Today</p>
       </button>
 
-      <task-table :tasks="undoneTasks" @reloadTask="reloadTask" />
+      <task-table :tasks="undoneTasks" @reloadTask="reloadTask" @setForm="setForm" />
     </span>
 
     <span :class="activeTab == 'done' ? '' : 'is-hidden'">
-      <task-table :tasks="doneTasks" @reloadTask="reloadTask" />
+      <task-table :tasks="doneTasks" @reloadTask="reloadTask" @setForm="setForm" />
     </span>
 
   </div>
@@ -30,7 +30,7 @@ import TaskForm from '@/components/TaskForm.vue'
 import Tabs from '@/components/Tabs.vue'
 import TaskTable from '@/components/TaskTable.vue'
 
-const { getUndoneTasks, getDoneTasks, modifyTask } = require('@/../modules/taskwarrior')
+const { getUndoneTasks, getDoneTasks, modifyTask, findTask } = require('@/../modules/taskwarrior')
 const moment = require('moment')
 
 export default {
@@ -49,6 +49,7 @@ export default {
 
     return {
       seedTask: this.filters || {},
+      formRerender: 0,
       undoneTasks: getUndoneTasks(filterOptions),
       doneTasks: getDoneTasks(filterOptions),
       activeTab: 'todo'
@@ -86,6 +87,10 @@ export default {
         }
         return acc
       }, [])
+    },
+    setForm (uuid) {
+      this.seedTask = uuid ? findTask(uuid) : (this.filters || {})
+      this.formRerender++
     }
   }
 }

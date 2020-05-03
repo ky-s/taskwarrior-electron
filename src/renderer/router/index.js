@@ -11,11 +11,6 @@ export default new Router({
       component: require('@/pages/TasksPage').default
     },
     {
-      path: '/edit/:uuid',
-      name: 'edit-page',
-      component: require('@/pages/EditPage').default
-    },
-    {
       path: '*',
       redirect: '/'
     }
