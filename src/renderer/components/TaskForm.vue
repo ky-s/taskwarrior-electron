@@ -58,7 +58,7 @@
         </div>
         <div class="control" v-if="task.uuid">
           <label class="label">Cancel</label>
-          <button class="button is-info" @click="task.uuid = null" style="width: 60px">
+          <button class="button is-warning" @click="task.uuid = null" style="width: 60px">
             <bulma-awesome-icon icon="eraser" />
           </button>
         </div>
