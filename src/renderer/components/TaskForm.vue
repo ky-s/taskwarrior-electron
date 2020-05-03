@@ -102,7 +102,7 @@ export default {
     getArticleClass () {
       return [
         'message',
-        (this.task.uuid ? 'is-warning' : 'is-primary')
+        (this.task.uuid ? 'is-warning' : 'is-info')
       ]
     }
   },
