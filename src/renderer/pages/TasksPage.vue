@@ -13,7 +13,7 @@
 <script>
 import SelectProject from '@/components/SelectProject.vue'
 import CheckBoxTodayOnly from '@/components/CheckBoxTodayOnly.vue'
-import TaskBoard from '@/components/TaskBoard.vue'
+import TaskBoard from '@/components/Tasks/Board.vue'
 
 export default {
   name: 'tasks-page',
