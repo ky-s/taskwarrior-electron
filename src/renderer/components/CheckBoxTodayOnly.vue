@@ -15,7 +15,7 @@ export default {
     value: String
   },
   data () {
-    return { checked: false }
+    return { checked: this.value }
   },
   watch: {
     checked: function (checked) {
