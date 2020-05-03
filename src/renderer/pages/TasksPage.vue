@@ -6,9 +6,7 @@
 
     <select-project v-model="filters.project" />
 
-    <hr>
-
-    <task-board :filters="rejectNull(filters)" />
+    <task-board :filters="rejectNull(filters)" style="padding-top: 20px" />
   </div>
 </template>
 

@@ -1,71 +1,67 @@
 <template>
-  <div>
-    <h4 class="title is-4">
+  <article :class="getArticleClass">
+    <div class="message-header">
       {{ task.uuid ? `Edit: uuid=${task.uuid}` : 'New' }}
-    </h4>
+      <button class="delete" @click="task.uuid = null" v-if="task.uuid" />
+    </div>
 
-    <form>
-      <div class="field has-addons">
-        <div class="control">
-          <label class="label">Due</label>
-          <input class="input" type="date" placeholder="Due" v-model="task.due">
-        </div>
+    <div class="message-body">
+      <form>
+        <div class="field has-addons">
+          <div class="control">
+            <label class="label">Due</label>
+            <input class="input" type="date" placeholder="Due" v-model="task.due">
+          </div>
 
-        <div class="control">
-          <label class="label">Project</label>
-          <input class="input" type="text" placeholder="project" list="project-list" v-model="task.project">
-          <datalist id="project-list">
-            <option v-for="project in projects" :value="project "/>
-          </datalist>
-        </div>
+          <div class="control">
+            <label class="label">Project</label>
+            <input class="input" type="text" placeholder="project" list="project-list" v-model="task.project">
+            <datalist id="project-list">
+              <option v-for="project in projects" :value="project "/>
+            </datalist>
+          </div>
 
-        <div class="control">
-          <label class="label">Priority</label>
-          <div class="select">
-            <select v-model="task.priority">
-              <option value="null"></option>
-              <option value="H">High</option>
-              <option value="M">Middle</option>
-              <option value="L">Low</option>
-            </select>
+          <div class="control">
+            <label class="label">Priority</label>
+            <div class="select">
+              <select v-model="task.priority">
+                <option value="null"></option>
+                <option value="H">High</option>
+                <option value="M">Middle</option>
+                <option value="L">Low</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="control is-expanded">
+            <label class="label">Tags</label>
+            <input class="input" type="text" placeholder="tags" v-model="task.tags">
           </div>
         </div>
 
-        <div class="control is-expanded">
-          <label class="label">Tags</label>
-          <input class="input" type="text" placeholder="tags" v-model="task.tags">
-        </div>
-      </div>
+        <div class="field has-addons">
+          <div class="control is-expanded">
+            <label class="label">Description</label>
+            <input class="input" type="text" placeholder="description" v-model="task.description" v-focus>
+          </div>
 
-      <div class="field has-addons">
-        <div class="control is-expanded">
-          <label class="label">Description</label>
-          <input class="input" type="text" placeholder="description" v-model="task.description" v-focus>
-        </div>
+          <div class="control">
+            <label class="label">Save</label>
+            <button class="button is-success" @click="save()" style="width: 60px">
+              <bulma-awesome-icon icon="save" />
+            </button>
+          </div>
 
-        <div class="control">
-          <label class="label">Save</label>
-          <button class="button is-success" @click="save()" style="width: 60px">
-            <bulma-awesome-icon icon="save" />
-          </button>
+          <div class="control">
+            <label class="label">Clear</label>
+            <button class="button is-light" @click="clear()" style="width: 60px">
+              <bulma-awesome-icon icon="eraser" />
+            </button>
+          </div>
         </div>
-
-        <div class="control">
-          <label class="label">Clear</label>
-          <button class="button is-light" @click="clear()" style="width: 60px">
-            <bulma-awesome-icon icon="eraser" />
-          </button>
-        </div>
-        <div class="control" v-if="task.uuid">
-          <label class="label">Cancel</label>
-          <button class="button is-warning" @click="task.uuid = null" style="width: 60px">
-            <bulma-awesome-icon icon="eraser" />
-          </button>
-        </div>
-      </div>
-
-    </form>
-  </div>
+      </form>
+    </div>
+  </article>
 </template>
 
 <script>
@@ -99,6 +95,15 @@ export default {
     return {
       task: task,
       projects: getProjects()
+    }
+  },
+
+  computed: {
+    getArticleClass () {
+      return [
+        'message',
+        (this.task.uuid ? 'is-warning' : 'is-primary')
+      ]
     }
   },
 
