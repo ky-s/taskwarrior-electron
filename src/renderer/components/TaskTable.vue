@@ -1,5 +1,5 @@
 <template>
-  <table class="table is-fullwidth is-hoverable">
+  <table class="table is-fullwidth is-hoverable is-striped">
     <thead>
       <tr>
         <th style="width: 5%"><abbr title="done">Done</abbr></th>
@@ -22,7 +22,7 @@
         <td>{{ (task.tags || []).join(', ') }}</td>
         <td>{{ task.description }}</td>
         <td>
-          <button class="button is-primary" @click="$emit('setForm', task.uuid)">
+          <button class="button is-warning" @click="$emit('setForm', task.uuid)">
             <bulma-awesome-icon icon="edit" />
           </button>
           <button class="button is-danger" @click="deleteTask(task)">
