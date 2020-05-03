@@ -1,10 +1,9 @@
 <template>
   <div class="container" :key="rerender">
-    <h1 class="title">Tasks</h1>
-
-    <check-box-today-only v-model="filters.due" class="is-pulled-right" />
+    <h1 class="title">Taskwarrior</h1>
 
     <select-project v-model="filters.project" />
+    <check-box-today-only v-model="filters.due" class="is-pulled-right" />
 
     <task-board :filters="rejectNull(filters)" style="padding-top: 20px" />
   </div>

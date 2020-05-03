@@ -1,6 +1,6 @@
 <template>
-  <span>
-    <span class="has-text-weight-semibold">Projects:</span>
+  <span class="control">
+    <label class="label">Projects</label>
     <span v-for="project in projects">
       <button :class="getProjectClass(project)" style="margin-left: 5px" @click="setProject(project)">
         <p>{{ project }}</p>
@@ -8,7 +8,7 @@
     </span>
 
     <span v-if="this.value">
-      <button class="button is-light is-small" style="margin-left: 5px" @click="setProject(null)">
+      <button class="button is-rounded is-light" style="margin-left: 5px" @click="setProject(null)">
         <p>Reset</p>
       </button>
     </span>
@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     getProjectClass (project) {
-      return 'button is-primary is-small ' +
+      return 'button is-primary is-rounded ' +
         (this.value === project ? '' : 'is-outlined')
     },
     setProject (project) {

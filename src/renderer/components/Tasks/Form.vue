@@ -61,7 +61,7 @@
           <!-- Clear Button -->
           <div class="control">
             <label class="label">Clear</label>
-            <button class="button is-light" @click="clear()" style="width: 60px">
+            <button class="button" @click="clear()" style="width: 60px">
               <bulma-awesome-icon icon="eraser" />
             </button>
           </div>

@@ -2,41 +2,47 @@
   <div>
     <task-form :seedTask="seedTask" @reloadTask="reloadTask" :key="formRerender" />
 
-    <div class="tabs is-fullwidth is-toggle" style="padding-top: 20px">
-      <ul>
-        <li :class="activeTab == 'todo' ? 'is-active' : ''" @click="activeTab = 'todo'">
-          <a>
-            <bulma-awesome-icon icon="list" />
-            Todo
-          </a>
-        </li>
-        <li :class="activeTab == 'done' ? 'is-active' : ''" @click="activeTab = 'done'">
-          <a>
-            <bulma-awesome-icon icon="check-square" />
-            Done
-          </a>
-        </li>
-      </ul>
-    </div>
+    <article class="message is-link">
+      <div class="message-header">
+        Task List: {{ filters.project || 'ALL' }}
+      </div>
+      <div class="message-body">
+        <div class="tabs is-fullwidth" style="padding-top: 20px">
+          <ul>
+            <li :class="activeTab == 'todo' ? 'is-active' : ''" @click="activeTab = 'todo'">
+              <a>
+                <bulma-awesome-icon icon="list" />
+                Todo
+              </a>
+            </li>
+            <li :class="activeTab == 'done' ? 'is-active' : ''" @click="activeTab = 'done'">
+              <a>
+                <bulma-awesome-icon icon="check-square" />
+                Done
+              </a>
+            </li>
+          </ul>
+        </div>
 
-    <button class="button is-info is-light" @click="reloadTask()">
-      <bulma-awesome-icon icon="sync" />
-      <p>Refresh</p>
-    </button>
+        <button class="button is-rounded is-info is-outlined" @click="reloadTask()">
+          <bulma-awesome-icon icon="sync" />
+          <p>Refresh</p>
+        </button>
 
-    <span :class="activeTab == 'todo' ? '' : 'is-hidden'">
-      <button class="button is-danger is-light" @click="redue()" v-if="overdueTasks().length > 0">
-        <bulma-awesome-icon icon="calendar-check" />
-        <p>Overdue to Today</p>
-      </button>
+        <span :class="activeTab == 'todo' ? '' : 'is-hidden'">
+          <button class="button is-rounded is-danger is-outlined" @click="redue()" v-if="overdueTasks().length > 0">
+            <bulma-awesome-icon icon="calendar-check" />
+            <p>Overdue to Today</p>
+          </button>
 
-      <task-table :tasks="undoneTasks" @reloadTask="reloadTask" @setForm="setForm" />
-    </span>
+          <task-table :tasks="undoneTasks" @reloadTask="reloadTask" @setForm="setForm" style="margin-top: 20px" />
+        </span>
 
-    <span :class="activeTab == 'done' ? '' : 'is-hidden'">
-      <task-table :tasks="doneTasks" @reloadTask="reloadTask" @setForm="setForm" />
-    </span>
-
+        <span :class="activeTab == 'done' ? '' : 'is-hidden'">
+          <task-table :tasks="doneTasks" @reloadTask="reloadTask" @setForm="setForm" style="margin-top: 20px" />
+        </span>
+      </div>
+    </article>
   </div>
 </template>
 

@@ -61,7 +61,7 @@ export default {
             return 'has-text-weight-bold'
           } else {
             // due < today (overdue)
-            return 'has-text-weight-bold has-background-warning'
+            return 'has-text-weight-bold has-text-danger has-background-grey-lighter'
           }
         }
       }
