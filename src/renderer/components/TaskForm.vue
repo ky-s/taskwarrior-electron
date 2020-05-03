@@ -8,19 +8,22 @@
     <div class="message-body">
       <form>
         <div class="field has-addons">
+          <!-- Due -->
           <div class="control">
             <label class="label">Due</label>
             <input class="input" type="date" placeholder="Due" v-model="task.due">
           </div>
 
+          <!-- Project -->
           <div class="control">
             <label class="label">Project</label>
             <input class="input" type="text" placeholder="project" list="project-list" v-model="task.project">
             <datalist id="project-list">
-              <option v-for="project in projects" :value="project "/>
+              <option v-for="project in projects" :value="project " />
             </datalist>
           </div>
 
+          <!-- Priority -->
           <div class="control">
             <label class="label">Priority</label>
             <div class="select">
@@ -33,6 +36,7 @@
             </div>
           </div>
 
+          <!-- Tags -->
           <div class="control is-expanded">
             <label class="label">Tags</label>
             <input class="input" type="text" placeholder="tags" v-model="task.tags">
@@ -40,11 +44,13 @@
         </div>
 
         <div class="field has-addons">
+          <!-- Description -->
           <div class="control is-expanded">
             <label class="label">Description</label>
             <input class="input" type="text" placeholder="description" v-model="task.description" v-focus>
           </div>
 
+          <!-- Save Button -->
           <div class="control">
             <label class="label">Save</label>
             <button class="button is-success" @click="save()" style="width: 60px">
@@ -52,6 +58,7 @@
             </button>
           </div>
 
+          <!-- Clear Button -->
           <div class="control">
             <label class="label">Clear</label>
             <button class="button is-light" @click="clear()" style="width: 60px">
