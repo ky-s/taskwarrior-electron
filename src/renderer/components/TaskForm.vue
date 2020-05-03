@@ -1,6 +1,9 @@
 <template>
   <div>
-    <p>{{ task.uuid ? `Edit: uuid=${task.uuid}` : 'New' }}</p>
+    <h4 class="title is-4">
+      {{ task.uuid ? `Edit: uuid=${task.uuid}` : 'New' }}
+    </h4>
+
     <form>
       <div class="field has-addons">
         <div class="control">
@@ -42,20 +45,22 @@
 
         <div class="control">
           <label class="label">Save</label>
-          <button class="button is-success" @click="save()">
+          <button class="button is-success" @click="save()" style="width: 60px">
             <bulma-awesome-icon icon="save" />
           </button>
         </div>
 
         <div class="control">
           <label class="label">Clear</label>
-          <button class="button is-light" @click="clear()">
+          <button class="button is-light" @click="clear()" style="width: 60px">
             <bulma-awesome-icon icon="eraser" />
           </button>
         </div>
         <div class="control" v-if="task.uuid">
           <label class="label">Cancel</label>
-          <button class="button is-info" @click="task.uuid = null">Cancel</button>
+          <button class="button is-info" @click="task.uuid = null" style="width: 60px">
+            <bulma-awesome-icon icon="eraser" />
+          </button>
         </div>
       </div>
 
