@@ -17,10 +17,7 @@
           </template>
 
           <template v-slot:todo>
-            <button class="button is-rounded is-danger is-outlined" @click="redue()" v-if="overdueTasks().length > 0">
-              <bulma-awesome-icon icon="calendar-check" />
-              <p>Overdue to Today</p>
-            </button>
+            <overdue-to-today-button :undoneTasks="undoneTasks" @reloadTask="reloadTask" />
 
             <task-table :tasks="undoneTasks" @reloadTask="reloadTask" @setForm="setForm" style="margin-top: 20px" />
           </template>
@@ -39,15 +36,16 @@
 import TaskForm from '@/components/Tasks/Form.vue'
 import TaskTabs from '@/components/Tasks/Tabs.vue'
 import TaskTable from '@/components/Tasks/Table.vue'
+import OverdueToTodayButton from '@/components/OverdueToTodayButton.vue'
 
-const { getUndoneTasks, getDoneTasks, modifyTask, findTask } = require('@/../modules/taskwarrior')
-const moment = require('moment')
+const { getUndoneTasks, getDoneTasks, findTask } = require('@/../modules/taskwarrior')
 
 export default {
   components: {
     TaskForm,
     TaskTabs,
-    TaskTable
+    TaskTable,
+    OverdueToTodayButton
   },
   props: {
     filters: Object
@@ -72,22 +70,6 @@ export default {
       this.undoneTasks = getUndoneTasks(filterOptions)
       this.doneTasks = getDoneTasks(filterOptions)
     },
-    redue () {
-      this.overdueTasks()
-        .forEach(task => {
-          task.due = moment().format('YYYY-MM-DD')
-          modifyTask(task.uuid, task)
-        })
-      this.reloadTask()
-    },
-    overdueTasks () {
-      const today = moment(
-        new Date().setHours(0, 0, 0, 0) // beginning of day
-      )
-
-      return this.undoneTasks
-        .filter(task => moment(task.due) < today)
-    },
     filterOptions () {
       const filters = this.filters
       return Object.keys(filters).reduce((acc, key) => {
@@ -98,7 +80,10 @@ export default {
       }, [])
     },
     setForm (uuid) {
-      this.seedTask = uuid ? findTask(uuid) : (this.filters || {})
+      const newSeedTask = uuid ? findTask(uuid) : (this.filters || {})
+
+      this.seedTask = Object.assign({}, this.seedTask, newSeedTask)
+      console.log(this.seedTask)
       this.formRerender++
     }
   }
