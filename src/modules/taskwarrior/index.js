@@ -206,4 +206,12 @@ exports.getProjects = () => {
     .map(task => (task.project))
     .filter((project, index, self) => self.indexOf(project) === index) // = uniq
     .filter(project => project) // = compact
+    .sort((a, b) => {
+      if (a < b) {
+        return -1
+      } else if (a === b) {
+        return 0
+      }
+      return 1
+    })
 }
