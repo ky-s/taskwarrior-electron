@@ -7,40 +7,29 @@
         Task List: {{ filters.project || 'ALL' }}
       </div>
       <div class="message-body">
-        <div class="tabs is-fullwidth" style="padding-top: 20px">
-          <ul>
-            <li :class="activeTab == 'todo' ? 'is-active' : ''" @click="activeTab = 'todo'">
-              <a>
-                <bulma-awesome-icon icon="list" />
-                Todo
-              </a>
-            </li>
-            <li :class="activeTab == 'done' ? 'is-active' : ''" @click="activeTab = 'done'">
-              <a>
-                <bulma-awesome-icon icon="check-square" />
-                Done
-              </a>
-            </li>
-          </ul>
-        </div>
+        <task-tabs>
 
-        <button class="button is-rounded is-info is-outlined" @click="reloadTask()">
-          <bulma-awesome-icon icon="sync" />
-          <p>Refresh</p>
-        </button>
+          <template v-slot:shared>
+            <button class="button is-rounded is-info is-outlined" @click="reloadTask()">
+              <bulma-awesome-icon icon="sync" />
+              <p>Refresh</p>
+            </button>
+          </template>
 
-        <span :class="activeTab == 'todo' ? '' : 'is-hidden'">
-          <button class="button is-rounded is-danger is-outlined" @click="redue()" v-if="overdueTasks().length > 0">
-            <bulma-awesome-icon icon="calendar-check" />
-            <p>Overdue to Today</p>
-          </button>
+          <template v-slot:todo>
+            <button class="button is-rounded is-danger is-outlined" @click="redue()" v-if="overdueTasks().length > 0">
+              <bulma-awesome-icon icon="calendar-check" />
+              <p>Overdue to Today</p>
+            </button>
 
-          <task-table :tasks="undoneTasks" @reloadTask="reloadTask" @setForm="setForm" style="margin-top: 20px" />
-        </span>
+            <task-table :tasks="undoneTasks" @reloadTask="reloadTask" @setForm="setForm" style="margin-top: 20px" />
+          </template>
 
-        <span :class="activeTab == 'done' ? '' : 'is-hidden'">
-          <task-table :tasks="doneTasks" @reloadTask="reloadTask" @setForm="setForm" style="margin-top: 20px" />
-        </span>
+          <template v-slot:done>
+            <task-table :tasks="doneTasks" @reloadTask="reloadTask" @setForm="setForm" style="margin-top: 20px" />
+          </template>
+
+        </task-tabs>
       </div>
     </article>
   </div>
@@ -48,6 +37,7 @@
 
 <script>
 import TaskForm from '@/components/Tasks/Form.vue'
+import TaskTabs from '@/components/Tasks/Tabs.vue'
 import TaskTable from '@/components/Tasks/Table.vue'
 
 const { getUndoneTasks, getDoneTasks, modifyTask, findTask } = require('@/../modules/taskwarrior')
@@ -56,6 +46,7 @@ const moment = require('moment')
 export default {
   components: {
     TaskForm,
+    TaskTabs,
     TaskTable
   },
   props: {
@@ -70,8 +61,7 @@ export default {
       seedTask: this.filters || {},
       formRerender: 0,
       undoneTasks: getUndoneTasks(filterOptions),
-      doneTasks: getDoneTasks(filterOptions),
-      activeTab: 'todo'
+      doneTasks: getDoneTasks(filterOptions)
     }
   },
   methods: {
