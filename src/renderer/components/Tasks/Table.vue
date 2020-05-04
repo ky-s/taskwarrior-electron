@@ -53,9 +53,9 @@ export default {
         const due = moment(task.due)
         const today = moment()
 
-        if (due.isBefore(moment())) {
-          if (due.year === today.year &&
-              due.month === today.month &&
+        if (due.isBefore(today)) {
+          if (due.year() === today.year() &&
+              due.month() === today.month() &&
               due.date() === today.date()) {
             // due = today
             return 'has-text-weight-bold'
