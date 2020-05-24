@@ -14,7 +14,11 @@
     <tbody>
       <tr v-for="(task, i) in tasks" :key="i" :class="getRowClass(task)">
         <td>
-          <input type="checkbox" :id="`checkbox-${task.uuid}`" :checked="task.status == 'completed'" @change="doneOrUndoneTask(task)">
+          <input
+            type="checkbox"
+            :id="`checkbox-${task.uuid}`"
+            :checked="task.status == 'completed'"
+            @change="doneOrUndoneTask(task)">
         </td>
         <td>{{ dateFormat(task.due) }}</td>
         <td>{{ task.project }}</td>
@@ -35,7 +39,12 @@
 </template>
 
 <script>
-const { doneTask, undoneTask, deleteTask, findTask } = require('@/../modules/taskwarrior')
+const {
+  doneTask,
+  undoneTask,
+  deleteTask,
+  findTask
+} = require('@/../modules/taskwarrior')
 const moment = require('moment')
 
 export default {

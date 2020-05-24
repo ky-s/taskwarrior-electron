@@ -30,7 +30,10 @@ export default {
   methods: {
     rejectNull (obj) {
       return Object.keys(obj)
-        .filter(key => obj[key] !== null && obj[key] !== undefined)
+        .filter(key =>
+          obj[key] !== null &&
+          obj[key] !== undefined
+        )
         .reduce((acc, key) => {
           acc[key] = obj[key]
           return acc

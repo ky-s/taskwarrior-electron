@@ -2,13 +2,19 @@
   <span class="control">
     <label class="label">Projects</label>
     <span v-for="project in projects">
-      <button :class="getProjectClass(project)" style="margin-left: 5px" @click="setProject(project)">
+      <button
+        :class="getProjectClass(project)"
+        style="margin-left: 5px"
+        @click="setProject(project)">
         <p>{{ project }}</p>
       </button>
     </span>
 
     <span v-if="this.value">
-      <button class="button is-rounded is-light" style="margin-left: 5px" @click="setProject(null)">
+      <button
+        class="button is-rounded is-light"
+        style="margin-left: 5px"
+        @click="setProject(null)">
         <p>Reset</p>
       </button>
     </span>

@@ -1,5 +1,8 @@
 <template>
-  <button class="button is-rounded is-danger is-outlined" @click="redue()" v-if="overdueTasks().length > 0">
+  <button
+    class="button is-rounded is-danger is-outlined"
+    @click="redue()"
+    v-if="overdueTasks().length > 0">
     <bulma-awesome-icon icon="calendar-check" />
     <p>Overdue to Today</p>
   </button>

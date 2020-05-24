@@ -17,7 +17,12 @@
           <!-- Project -->
           <div class="control">
             <label class="label">Project</label>
-            <input class="input" type="text" placeholder="project" list="project-list" v-model="task.project">
+            <input
+              class="input"
+              type="text"
+              placeholder="project"
+              list="project-list"
+              v-model="task.project">
             <datalist id="project-list">
               <option v-for="project in projects" :value="project " />
             </datalist>
@@ -47,7 +52,12 @@
           <!-- Description -->
           <div class="control is-expanded">
             <label class="label">Description</label>
-            <input class="input" type="text" placeholder="description" v-model="task.description" v-focus>
+            <input
+              class="input"
+              type="text"
+              placeholder="description"
+              v-model="task.description"
+              v-focus>
           </div>
 
           <!-- Save Button -->
