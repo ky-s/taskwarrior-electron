@@ -63,6 +63,8 @@ const {
   findTask
 } = require('@/../modules/taskwarrior')
 
+const moment = require('moment')
+
 export default {
   components: {
     TaskForm,
@@ -82,7 +84,12 @@ export default {
       seedTask: this.filters || {},
       formRerender: 0,
       undoneTasks: getUndoneTasks(filterOptions),
-      doneTasks: getDoneTasks(filterOptions)
+      doneTasks: getDoneTasks(
+        filterOptions.concat([
+          'due.after:' +
+          moment().subtract(1, 'month').format('YYYY-MM-DD')
+        ])
+      )
     }
   },
   methods: {
@@ -91,7 +98,12 @@ export default {
       const filterOptions = this.filterOptions()
 
       this.undoneTasks = getUndoneTasks(filterOptions)
-      this.doneTasks = getDoneTasks(filterOptions)
+      this.doneTasks = getDoneTasks(
+        filterOptions.concat([
+          'due.after:' +
+          moment().subtract(1, 'month').format('YYYY-MM-DD')
+        ])
+      )
     },
     filterOptions () {
       const filters = this.filters
